@@ -14,6 +14,10 @@ create table beach_snapshot (
   id                        bigint not null,
   scrape_time               timestamp,
   beach_id                  bigint,
+  swim_status               varchar(255),
+  forecast_for_today        integer,
+  most_recent_result        integer,
+  result_collected          varchar(255),
   constraint pk_beach_snapshot primary key (id))
 ;
 

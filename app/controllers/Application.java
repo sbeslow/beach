@@ -4,6 +4,7 @@ import play.*;
 import play.mvc.*;
 
 import views.html.*;
+import webScraping.BeachScraper;
 
 public class Application extends Controller {
 
@@ -13,4 +14,8 @@ public class Application extends Controller {
         return ok(index.render("Your new application is ready."));
     }
 
+    public static Result test() {
+        BeachScraper.scrapeAllBeachWebsites();
+        return TODO;
+    }
 }

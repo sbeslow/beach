@@ -1,15 +1,8 @@
 package controllers;
 
-import models.Beach;
 import models.BeachSnapshot;
-import models.SignificantError;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.joda.time.DateTime;
 import play.mvc.Controller;
 import play.mvc.Result;
-import webScraping.BeachScraper;
-
-import java.util.Map;
 
 public class Beaches extends Controller {
 
