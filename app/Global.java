@@ -31,8 +31,8 @@ public class Global extends GlobalSettings {
 
         BufferedReader br = new BufferedReader(new java.io.FileReader(theFile));
 
-        // Get rid of the header row
-        String sCurrentLine = br.readLine();
+        String sCurrentLine;
+        br.readLine(); // Get rid of the header row
         try {
 
             while ((sCurrentLine = br.readLine()) != null) {

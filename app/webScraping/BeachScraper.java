@@ -24,8 +24,9 @@ public abstract class BeachScraper {
 
         Element bSnap = doc.getElementsByClass("beach-snapshot").first();
         Element restrictions = bSnap.getElementsByClass("status").first();
-        List<String> restrictTags = new ArrayList(restrictions.classNames());
+        List<String> restrictTags = new ArrayList<>(restrictions.classNames());
 
+        // TODO: Catch exceptions here and don't completely fail this whole procedure
         String restriction = restrictTags.get(0);
         if (restriction.equals("status")) {
             restriction = restrictTags.get(1);
@@ -51,12 +52,5 @@ public abstract class BeachScraper {
         beachSnapshot.scrapeTime = new DateTime();
 
         beachSnapshot.save();
-    }
-
-    // Incoming string is <td>blah</td> --> get rid of the tags
-    private static String stripTd(String origString) {
-        Document doc = Jsoup.parse(origString);
-        Element el = doc.getElementsByTag("td").first();
-        return el.toString();
     }
 }
