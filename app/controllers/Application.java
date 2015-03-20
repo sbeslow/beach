@@ -1,10 +1,14 @@
 package controllers;
 
-import play.*;
+import models.Beach;
+import models.SignificantError;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import play.mvc.*;
 
 import views.html.*;
 import webScraping.BeachScraper;
+
+import java.util.List;
 
 public class Application extends Controller {
 
@@ -15,7 +19,20 @@ public class Application extends Controller {
     }
 
     public static Result test() {
-        BeachScraper.scrapeAllBeachWebsites();
+        return TODO;
+    }
+
+    public static Result scrapeCpdAllBeaches() {
+        List<Beach> beaches = Beach.find.all();
+        for (Beach beach: beaches) {
+            try {
+                BeachScraper.scrapeCpdPage(beach);
+            }
+            catch (Exception e) {
+                SignificantError.write(ExceptionUtils.getStackFrames(e));
+            }
+        }
+
         return TODO;
     }
 }

@@ -2,39 +2,23 @@ package webScraping;
 
 import models.Beach;
 import models.BeachSnapshot;
+import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public abstract class BeachScraper {
 
-    public static Map<Long, Beach> scrapeAllBeachWebsites() {
-
-        // TODO: Do the web scraping here
-        // TODO: Save the beaches to the database
-        // TODO: Map key should be beach id
-        Beach beach = Beach.find.all().get(0);
-
-        try {
-            BeachSnapshot bs = scrapeCpdPage(beach);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private static BeachSnapshot scrapeCpdPage(Beach beach) throws Exception {
+    public static void scrapeCpdPage(Beach beach) throws Exception {
 
         Document doc;
 
-        doc = Jsoup.connect("http://www.cpdbeaches.com/beaches/12th-Street-Beach/").get();
+        String cpdUrl = "http://www.cpdbeaches.com/beaches/" + beach.urlCode;
+        doc = Jsoup.connect(cpdUrl).get();
 
         BeachSnapshot beachSnapshot = new BeachSnapshot(beach);
 
@@ -64,10 +48,9 @@ public abstract class BeachScraper {
         beachSnapshot.forecastForToday = Integer.parseInt(tableRows.get(1).childNode(0).toString().trim());
         beachSnapshot.mostRecentResult = Integer.parseInt(tableRows.get(3).childNode(0).toString().trim());
         beachSnapshot.resultCollected = tableRows.get(4).childNode(0).toString();
+        beachSnapshot.scrapeTime = new DateTime();
 
-
-
-        return null;
+        beachSnapshot.save();
     }
 
     // Incoming string is <td>blah</td> --> get rid of the tags
