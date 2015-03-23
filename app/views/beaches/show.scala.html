@@ -1,5 +1,15 @@
-@(beachSnapshot: BeachSnapshot)
+@(beach: Beach)
 
 @main("") {
-    <h1>@beachSnapshot.beach.name</h1>
+    <h1>@beach.name</h1>
+    <h3>Current status: @beach.currentStatus()</h3>
+
+    @defining(beach.getSeasonalStats) { seasonalStats =>
+
+      <H5>Hours with no swimming restrictions: @seasonalStats.getHoursNoRestrict</H5>
+      <h5>Hours with a swim advisory: @seasonalStats.getHoursAdvisory</h5>
+      <h5>Hours with a swim ban @seasonalStats.getHoursSwimBan</h5>
+
+    }
+
 }

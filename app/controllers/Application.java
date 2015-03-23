@@ -6,7 +6,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import play.mvc.*;
 
 import views.html.*;
-import webScraping.BeachScraper;
+import beachNinja.BeachScraper;
 
 import java.util.List;
 

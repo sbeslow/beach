@@ -1,4 +1,4 @@
-package webScraping;
+package beachNinja;
 
 import models.Beach;
 import models.BeachSnapshot;

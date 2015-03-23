@@ -14,9 +14,9 @@ import javax.persistence.ManyToOne;
 @Entity
 public class BeachSnapshot extends Model {
 
-    public static final String NO_RESTRICTIONS = "no-restrictions";
-    public static final String SWIM_ADVISORY = "swim-advisory";
-    public static final String SWIM_BAN = "swim-ban";
+    public static final String NO_RESTRICTIONS = "No Restrictions";
+    public static final String SWIM_ADVISORY = "Swim Advisory";
+    public static final String SWIM_BAN = "Swim Ban";
 
     @Id
     public long id;
@@ -37,5 +37,15 @@ public class BeachSnapshot extends Model {
 
     public BeachSnapshot(Beach beach) {
         this.beach = beach;
+    }
+
+    public BeachSnapshot(DateTime scrapeTime, Beach beach, String swimStatus, int forecastForToday,
+                         int mostRecentResult, String resultCollected) {
+        this.scrapeTime = scrapeTime;
+        this.beach = beach;
+        this.swimStatus = swimStatus;
+        this.forecastForToday = forecastForToday;
+        this.mostRecentResult = mostRecentResult;
+        this.resultCollected = resultCollected;
     }
 }

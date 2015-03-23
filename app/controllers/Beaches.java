@@ -1,6 +1,6 @@
 package controllers;
 
-import models.BeachSnapshot;
+import models.Beach;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -8,11 +8,9 @@ public class Beaches extends Controller {
 
     public static Result show(String urlCode) {
 
-        BeachSnapshot beachSnapshot = null;
+        Beach beach;
         try {
-            beachSnapshot= BeachSnapshot.find.where().eq("beach.urlCode", urlCode)
-                    .setOrderBy("scrapeTime desc").findList().get(0);
-
+            beach = Beach.find.where().eq("urlCode", urlCode).findUnique();
         }
         catch (Exception e) {
             if (!Application.productionMode) {
@@ -23,7 +21,7 @@ public class Beaches extends Controller {
             return badRequest("ERRORCODE:2");
         }
 
-        return ok(views.html.beaches.show.render(beachSnapshot));
+        return ok(views.html.beaches.show.render(beach));
 
     }
 }

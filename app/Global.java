@@ -1,4 +1,6 @@
 import models.Beach;
+import models.BeachSnapshot;
+import org.joda.time.DateTime;
 import play.*;
 
 import java.io.BufferedReader;
@@ -9,9 +11,10 @@ public class Global extends GlobalSettings {
 
     public void onStart(Application app) {
         try {
-            // if database is empty, fill it with fake data
+            // if database is empty, pre-load database
             if (databaseEmpty()) {
-                readInBeaches();
+                readInBeaches(); // read in beaches
+                createFakeData();
             }
         }
         catch (Exception e) {
@@ -55,8 +58,18 @@ public class Global extends GlobalSettings {
     // Check if the database is empty by seeing if there are any beaches in it.
     private boolean databaseEmpty() {
         List<Beach> beaches = Beach.find.all();
-        if (0 == beaches.size())
-            return true;
-        return false;
+        return 0 == beaches.size();
+    }
+
+    // Create some fake data for testing purposes.
+    private void createFakeData() {
+
+        Beach beach = Beach.find.all().get(0);
+
+        DateTime now = new DateTime();
+
+        (new BeachSnapshot(now.minusHours(1), beach, BeachSnapshot.NO_RESTRICTIONS, 10, 12, "Aug 12")).save();
+        (new BeachSnapshot(now, beach, BeachSnapshot.SWIM_ADVISORY, 12, 15, "Aug 11")).save();
+
     }
 }
