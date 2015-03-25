@@ -7,6 +7,8 @@ create table beach (
   id                        bigint not null,
   name                      varchar(255),
   url_code                  varchar(255),
+  latitude                  double,
+  longitude                 double,
   constraint pk_beach primary key (id))
 ;
 

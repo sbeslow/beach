@@ -40,7 +40,14 @@ public class Global extends GlobalSettings {
 
             while ((sCurrentLine = br.readLine()) != null) {
                 String[] beachFields = sCurrentLine.split(",");
-                Beach beach = new Beach(beachFields);
+
+                Beach beach;
+                try {
+                    beach = new Beach(beachFields);
+                }
+                catch(Exception e) {
+                    continue;
+                }
                 beach.save();
             }
         } catch (Exception e) {

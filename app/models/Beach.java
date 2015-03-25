@@ -20,15 +20,31 @@ public class Beach extends Model {
     public String name;
     public String urlCode;
 
+    public Double latitude;
+    public Double longitude;
+
     @OneToMany(mappedBy = "beach")
     public List<BeachSnapshot> snapshots;
 
     @Transient
     private SeasonalStats seasonalStats = null;
 
-    public Beach(String[] beachFields) {
-        this.name = beachFields[0];
-        this.urlCode = beachFields[1];
+    public Beach(String[] beachFields) throws Exception {
+
+        this.id = Long.parseLong(beachFields[0]);
+
+        this.name = beachFields[1];
+        this.urlCode = beachFields[2];
+
+        try {
+            this.latitude = Double.parseDouble(beachFields[3]);
+            this.longitude = Double.parseDouble(beachFields[4]);
+        }
+        catch(Exception e) {
+            this.latitude = null;
+            this.longitude = null;
+        }
+
     }
 
     public static Finder<Long,Beach> find = new Finder<>(
