@@ -3,9 +3,7 @@ package beachNinja;
 import models.Beach;
 import models.BeachSnapshot;
 
-import java.io.Serializable;
-
-public class SeasonalStats implements Serializable {
+public class SeasonalStats {
 
     private int hoursNoRestrict = 0;
     private int hoursAdvisory = 0;

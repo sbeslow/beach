@@ -23,15 +23,7 @@ public class Application extends Controller {
     }
 
     public static Result scrapeCpdAllBeaches() {
-        List<Beach> beaches = Beach.find.all();
-        for (Beach beach: beaches) {
-            try {
-                BeachScraper.scrapeCpdPage(beach);
-            }
-            catch (Exception e) {
-                SignificantError.write(ExceptionUtils.getStackFrames(e));
-            }
-        }
+        BeachScraper.scrapeAllCpdPages();;
 
         return TODO;
     }

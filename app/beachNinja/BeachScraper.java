@@ -2,6 +2,7 @@ package beachNinja;
 
 import models.Beach;
 import models.BeachSnapshot;
+import models.SignificantError;
 import org.joda.time.DateTime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public abstract class BeachScraper {
 
-    public static void scrapeCpdPage(Beach beach) throws Exception {
+    private static void scrapeCpdPage(Beach beach) throws Exception {
 
         Document doc;
 
@@ -52,5 +53,17 @@ public abstract class BeachScraper {
         beachSnapshot.scrapeTime = new DateTime();
 
         beachSnapshot.save();
+    }
+
+    public static void scrapeAllCpdPages() {
+        List<Beach> beaches = Beach.find.all();
+        for (Beach beach : beaches) {
+            try {
+                scrapeCpdPage(beach);
+            }
+            catch (Exception e) {
+                SignificantError.write(e);
+            }
+        }
     }
 }

@@ -23,7 +23,7 @@ public class BeachSnapshot extends Model {
 
     public DateTime scrapeTime;
 
-    @ManyToOne
+    @ManyToOne (targetEntity = Beach.class)
     public Beach beach;
 
     public String swimStatus = null;

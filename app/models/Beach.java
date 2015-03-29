@@ -23,11 +23,11 @@ public class Beach extends Model {
     public Double latitude;
     public Double longitude;
 
-    @OneToMany(mappedBy = "beach")
+    @OneToMany(mappedBy = "beach", targetEntity = BeachSnapshot.class)
     public List<BeachSnapshot> snapshots;
 
     @Transient
-    private SeasonalStats seasonalStats = null;
+    public SeasonalStats seasonalStats = null;
 
     public Beach(String[] beachFields) throws Exception {
 
