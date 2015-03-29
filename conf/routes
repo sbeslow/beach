@@ -7,6 +7,8 @@ GET        /                      controllers.Application.index()
 GET        /beach/:urlCode        controllers.Beaches.show(urlCode: String)
 GET         /scrapeBeaches        controllers.Application.scrapeCpdAllBeaches()
 
+GET         /api/advisories/:beachUrlCode  controllers.Apis.advisories(beachUrlCode : String)
+
 GET        /test                  controllers.Application.test()
 
 # Map static resources from the /public folder to the /assets URL path

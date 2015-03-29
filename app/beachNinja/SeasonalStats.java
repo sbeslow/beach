@@ -3,7 +3,9 @@ package beachNinja;
 import models.Beach;
 import models.BeachSnapshot;
 
-public class SeasonalStats {
+import java.io.Serializable;
+
+public class SeasonalStats implements Serializable {
 
     private int hoursNoRestrict = 0;
     private int hoursAdvisory = 0;
@@ -36,18 +38,17 @@ public class SeasonalStats {
             long msPassed = thisSnapshot.scrapeTime.getMillis() - lastSnapshot.scrapeTime.getMillis();
             int hoursPassed = (int) (msPassed / 3600000);
 
-            if (BeachSnapshot.NO_RESTRICTIONS.equals(thisSnapshot.swimStatus)) {
-                hoursNoRestrict += hoursPassed;
-            }
-            else if (BeachSnapshot.SWIM_ADVISORY.equals(thisSnapshot.swimStatus)) {
-                hoursAdvisory += hoursPassed;
-            }
-            else if (BeachSnapshot.SWIM_BAN.equals(thisSnapshot.swimStatus)) {
-                hoursAdvisory += hoursPassed;
+            switch (thisSnapshot.swimStatus) {
+                case BeachSnapshot.NO_RESTRICTIONS:
+                    hoursNoRestrict += hoursPassed;
+                    break;
+                case BeachSnapshot.SWIM_ADVISORY:
+                    hoursAdvisory += hoursPassed;
+                    break;
+                case BeachSnapshot.SWIM_BAN:
+                    hoursSwimBan += hoursPassed;
+                    break;
             }
         }
-
-
-
     }
 }
