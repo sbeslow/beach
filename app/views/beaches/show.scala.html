@@ -8,9 +8,9 @@
 
     @defining(beach.getSeasonalStats) { seasonalStats =>
 
-        <H5 id="hoursNoRestrict" value="@seasonalStats.getHoursNoRestrict">Hours with no swimming restrictions: @seasonalStats.getHoursNoRestrict</H5>
-        <h5 id="hoursAdvisory" value="@seasonalStats.getHoursAdvisory">Hours with a swim advisory: @seasonalStats.getHoursAdvisory</h5>
-        <h5 id="hoursBan" value="@seasonalStats">Hours with a swim ban @seasonalStats.getHoursSwimBan</h5>
+        <H5 id="hoursNoRestrict" value="@seasonalStats.getMinsNoRestrict">Hours with no swimming restrictions: @seasonalStats.getMinsNoRestrict</H5>
+        <h5 id="hoursAdvisory" value="@seasonalStats.getMinsAdvisory">Hours with a swim advisory: @seasonalStats.getMinsAdvisory</h5>
+        <h5 id="hoursBan" value="@seasonalStats">Hours with a swim ban @seasonalStats.getMinsSwimBan</h5>
 
         <script>
 

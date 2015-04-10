@@ -1,8 +1,13 @@
 package controllers;
 
+import dataManagement.BeachSorter;
 import models.Beach;
+import models.BeachSnapshot;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import java.util.List;
 
 public class Beaches extends Controller {
 
@@ -22,6 +27,15 @@ public class Beaches extends Controller {
         }
 
         return ok(views.html.beaches.show.render(beach));
+
+    }
+
+    public static List<Beach> scoreboard() {
+
+        // If I cared about speed here, I should be writing SQL to get the list in order.  But, I don't.
+        List<Beach> beachList = Beach.find.all();
+        beachList = BeachSorter.sortByShittiest(beachList);
+        return beachList;
 
     }
 }

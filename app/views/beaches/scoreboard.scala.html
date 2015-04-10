@@ -1,0 +1,23 @@
+
+
+<table class="table">
+<tr>
+    <td><strong>Beach Name</strong></td>
+    <td><strong>% Ban</strong></td>
+    <td><strong>% Advisory</strong></td>
+    <td><strong>% No Restrictions</strong></td>
+
+</tr>
+@for(beach <- Beaches.scoreboard()) {
+    <tr>
+        <td>@beach.name</td>
+        @defining(beach.getSeasonalStats) { beachStat =>
+            <td>@beachStat.percentBan()</td>
+            <td>@beachStat.percentAdvisory()</td>
+            <td>@beachStat.percentNoRestrict()</td>
+        }
+
+    </tr>
+}
+
+</table>

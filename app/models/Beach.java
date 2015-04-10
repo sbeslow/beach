@@ -3,10 +3,7 @@ package models;
 import beachNinja.SeasonalStats;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -22,8 +19,9 @@ public class Beach extends Model {
 
     public Double latitude;
     public Double longitude;
+    public boolean crap;
 
-    @OneToMany(mappedBy = "beach", targetEntity = BeachSnapshot.class)
+    @OneToMany(mappedBy = "beach", cascade = CascadeType.ALL)
     public List<BeachSnapshot> snapshots;
 
     @Transient
@@ -31,10 +29,8 @@ public class Beach extends Model {
 
     public Beach(String[] beachFields) throws Exception {
 
-        this.id = Long.parseLong(beachFields[0]);
-
-        this.name = beachFields[1];
-        this.urlCode = beachFields[2];
+        this.name = beachFields[0];
+        this.urlCode = beachFields[1];
 
         try {
             this.latitude = Double.parseDouble(beachFields[3]);
@@ -60,6 +56,7 @@ public class Beach extends Model {
     }
 
     public SeasonalStats getSeasonalStats() {
+        List<BeachSnapshot> snapshots = this.snapshots;
         if (null == seasonalStats) {
             seasonalStats = new SeasonalStats(this);
         }

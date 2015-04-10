@@ -10,6 +10,7 @@ import scala.concurrent.duration.FiniteDuration;
 import java.io.BufferedReader;
 import java.io.File;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Global extends GlobalSettings {
@@ -22,11 +23,35 @@ public class Global extends GlobalSettings {
                 //createFakeData();
             }
             scrapeCron();
+            if (controllers.Application.config.isTestMode()) {
+                makeFakeData();
+            }
         }
         catch (Exception e) {
             // if unable to start the program, print to console and exit.
             e.printStackTrace();
             System.exit(-2);
+        }
+    }
+
+    private void makeFakeData() {
+        List<Beach> beachList = Beach.find.all();
+
+        for (Beach beach : beachList) {
+            DateTime timeMarker = new DateTime();
+            for (int i = 0; i < 24; i ++) {
+                timeMarker = timeMarker.minusHours(1);
+                Random rand = new Random();
+                int randomNum = rand.nextInt((6 - 1) + 1) + 1;
+                String swimStatus = BeachSnapshot.NO_RESTRICTIONS;
+                if (randomNum == 1)
+                    swimStatus = BeachSnapshot.SWIM_BAN;
+                else if (randomNum <= 3)
+                    swimStatus = BeachSnapshot.SWIM_ADVISORY;
+
+                BeachSnapshot snapshot = new BeachSnapshot(timeMarker, beach, swimStatus, 0, 0, null);
+                snapshot.save();
+            }
         }
     }
 
@@ -88,20 +113,23 @@ public class Global extends GlobalSettings {
 
     // Cron job that scrapes CPD site
     private void scrapeCron() {
-        // Check when the last scrape happened.
-
-        // TODO: If it is after 7:01PM, skip to the next day.
 
         try {
 
-            FiniteDuration delay = FiniteDuration.create(0, TimeUnit.SECONDS);
+            DateTime now = new DateTime();
+            DateTime inAnHour = now.plusHours(1);
+            DateTime nextHour = new DateTime(inAnHour.getYear(), inAnHour.getMonthOfYear(), inAnHour.getDayOfMonth(),
+                    inAnHour.getHourOfDay(), 0, inAnHour.getSecondOfMinute());
+            int secondsTillTopOfHour = ((int) (nextHour.getMillis() - now.getMillis())) / 1000;
+
+            FiniteDuration delay = FiniteDuration.create(secondsTillTopOfHour, TimeUnit.SECONDS);
             FiniteDuration frequency = FiniteDuration.create(30, TimeUnit.MINUTES);
 
             Runnable showTime = new Runnable() {
                 @Override
                 public void run() {
+                    // TODO: Check time and don't run after 7:00PM
                     BeachScraper.scrapeAllCpdPages();
-                    System.out.println("Time is now: " + new DateTime());
                 }
             };
 

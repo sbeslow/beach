@@ -1,5 +1,6 @@
 package controllers;
 
+import beachNinja.Config;
 import models.Beach;
 import models.SignificantError;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -11,6 +12,8 @@ import beachNinja.BeachScraper;
 import java.util.List;
 
 public class Application extends Controller {
+
+    public static final Config config = new Config();
 
     public static final boolean productionMode = false;
 
