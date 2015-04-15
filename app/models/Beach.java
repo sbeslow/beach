@@ -19,7 +19,6 @@ public class Beach extends Model {
 
     public Double latitude;
     public Double longitude;
-    public boolean crap;
 
     @OneToMany(mappedBy = "beach", cascade = CascadeType.ALL)
     public List<BeachSnapshot> snapshots;
