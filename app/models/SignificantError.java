@@ -10,7 +10,9 @@ import javax.persistence.Id;
 @Entity
 public class SignificantError extends Model {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     public long id;
 
     private DateTime dateTime = new DateTime();
@@ -18,6 +20,9 @@ public class SignificantError extends Model {
     private String message;
 
     private SignificantError(String message) {
+        if (message.length() > 255) {
+        	message = message.substring(0, 255);
+        }
         this.message = message;
     }
 

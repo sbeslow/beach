@@ -2,8 +2,11 @@ import beachNinja.BeachScraper;
 import models.Beach;
 import models.BeachSnapshot;
 import models.SignificantError;
+
 import org.joda.time.DateTime;
+
 import play.*;
+import play.Logger.ALogger;
 import play.libs.Akka;
 import scala.concurrent.duration.FiniteDuration;
 
@@ -14,6 +17,8 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Global extends GlobalSettings {
+	
+	private static final ALogger logger = Logger.of(Global.class);
 
     public void onStart(Application app) {
         try {
@@ -128,6 +133,7 @@ public class Global extends GlobalSettings {
             Runnable showTime = new Runnable() {
                 @Override
                 public void run() {
+                	logger.info("Running scrape");
                     // TODO: Check time and don't run after 7:00PM
                     BeachScraper.scrapeAllCpdPages();
                 }

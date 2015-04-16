@@ -1,23 +1,63 @@
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
 
+<div id="graphContainer" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
 
-<table class="table">
-<tr>
-    <td><strong>Beach Name</strong></td>
-    <td><strong>% Ban</strong></td>
-    <td><strong>% Advisory</strong></td>
-    <td><strong>% No Restrictions</strong></td>
+<script>
+	beachNames = [];
+	
+</script>
 
-</tr>
-@for(beach <- Beaches.scoreboard()) {
-    <tr>
-        <td>@beach.name</td>
-        @defining(beach.getSeasonalStats) { beachStat =>
-            <td>@beachStat.percentBan()</td>
-            <td>@beachStat.percentAdvisory()</td>
-            <td>@beachStat.percentNoRestrict()</td>
-        }
+<script>
 
-    </tr>
-}
+var chart = new Highcharts.Chart({
+        chart: {
+            type: 'bar',
+            renderTo: 'graphContainer',
+        },
+        title: {
+            text: 'Stacked bar chart'
+        },
+        xAxis: {
+            categories: [1,2,3]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total fruit consumption'
+            }
+        },
+        legend: {
+            reversed: true
+        },
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+        series: [{
+            name: 'John',
+            data: [5, 3, 4, 7, 2]
+        }, {
+            name: 'Jane',
+            data: [2, 2, 3, 2, 1]
+        }, {
+            name: 'Joe',
+            data: [3, 4, 4, 2, 5]
+        }]
+    });
 
-</table>
+$.get( "/scoreboard/beaches", function( data ) {
+	alert(data);
+	beachNames = [];
+    var arr = data.split(',');
+
+    for(var i = 0; i<arr.length; i++){
+    	beachNames.push(arr[i]);
+    }
+    
+	chart.xAxis[0].setCategories(beachNames);
+
+});
+
+</script>

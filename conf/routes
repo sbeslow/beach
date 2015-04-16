@@ -8,6 +8,8 @@ GET        /beach/:urlCode                      controllers.Beaches.show(urlCode
 GET        /scrapeBeaches                       controllers.Application.scrapeCpdAllBeaches()
 
 GET        /api/advisories/:beachUrlCode        controllers.Apis.advisories(beachUrlCode : String)
+GET			/api/scoreboard						controllers.Apis.scoreboard()
+GET			/scoreboard/beaches					controllers.Beaches.listScoreboardBeaches()
 
 GET        /test                                controllers.Application.test()
 
