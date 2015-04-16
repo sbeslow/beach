@@ -7,9 +7,8 @@ create table beach (
   id                        bigint not null,
   name                      varchar(255),
   url_code                  varchar(255),
-  latitude                  double,
-  longitude                 double,
-  crap                      boolean,
+  latitude                  float,
+  longitude                 float,
   constraint pk_beach primary key (id))
 ;
 
@@ -37,22 +36,18 @@ create sequence beach_snapshot_seq;
 
 create sequence significant_error_seq;
 
-alter table beach_snapshot add constraint fk_beach_snapshot_beach_1 foreign key (beach_id) references beach (id) on delete restrict on update restrict;
+alter table beach_snapshot add constraint fk_beach_snapshot_beach_1 foreign key (beach_id) references beach (id);
 create index ix_beach_snapshot_beach_1 on beach_snapshot (beach_id);
 
 
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists beach cascade;
 
-drop table if exists beach;
+drop table if exists beach_snapshot cascade;
 
-drop table if exists beach_snapshot;
-
-drop table if exists significant_error;
-
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table if exists significant_error cascade;
 
 drop sequence if exists beach_seq;
 
