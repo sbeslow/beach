@@ -35,14 +35,17 @@ public class Apis extends Controller {
         
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ArrayNode beachesNode = factory.arrayNode();
+        int rank = 1;
         
         for (Beach beach : beachList) {
         	ObjectNode beachNode = Json.newObject();
         	beachNode.put("name", beach.name);
+        	beachNode.put("rank", rank);
         	beachNode.put("noRestrict", beach.getSeasonalStats().percentNoRestrict());
         	beachNode.put("advisory", beach.getSeasonalStats().percentAdvisory());
         	beachNode.put("ban", beach.getSeasonalStats().percentBan());
         	beachesNode.add(beachNode);
+        	rank++;
         }
         return ok(beachesNode);
     }

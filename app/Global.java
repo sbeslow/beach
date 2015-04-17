@@ -27,7 +27,7 @@ public class Global extends GlobalSettings {
                 readInBeaches(); // read in beaches
                 //createFakeData();
             }
-            scrapeCron();
+            //scrapeCron(); #TODO: Uncomment this
             if (controllers.Application.config.isTestMode()) {
                 makeFakeData();
             }
