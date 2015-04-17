@@ -2,18 +2,13 @@
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
 
 <div id="graphContainer" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-<style>
-	#graphContainer {
-		height: 100%;
-		width: 100%
-	}
-</style>
+
 <script>
 
 var chart = new Highcharts.Chart({
         chart: {
             type: 'bar',
-            renderTo: 'graphContainer',
+            renderTo: 'graphContainer'
         },
         yAxis: {
             min: 0,
@@ -29,6 +24,12 @@ var chart = new Highcharts.Chart({
                 stacking: 'normal'
             }
         },
+        title:{
+            text:''
+        },
+        credits: {
+            enabled: false
+        }
     });
     
 $.getJSON('/api/scoreboard', function(data) {
@@ -44,16 +45,19 @@ $.getJSON('/api/scoreboard', function(data) {
     });
     chart.xAxis[0].setCategories(beachNames);
     chart.addSeries({
-        name: "Swim Ban",
-        data: bans
+        name: "No Restrictions",
+        data: noRestrict,
+        color: '#009933'
     });
     chart.addSeries({
         name: "Swim Advisory",
-        data: advisory
+        data: advisory,
+        color: '#FFFF00'
     });
     chart.addSeries({
-        name: "No Restrictions",
-        data: noRestrict
+        name: "Swim Ban",
+        data: bans,
+        color: '#6600FF'
     });
 });
 

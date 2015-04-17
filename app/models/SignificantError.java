@@ -2,6 +2,7 @@ package models;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.DateTime;
+import play.Logger;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -12,6 +13,8 @@ public class SignificantError extends Model {
 
 	private static final long serialVersionUID = 1L;
 
+    private static final Logger.ALogger logger = Logger.of(SignificantError.class);
+
 	@Id
     public long id;
 
@@ -20,6 +23,8 @@ public class SignificantError extends Model {
     private String message;
 
     private SignificantError(String message) {
+
+        logger.error(message);
         if (message.length() > 255) {
         	message = message.substring(0, 255);
         }

@@ -55,21 +55,15 @@ public class SeasonalStats {
         return score + (2 * minsSwimBan);
     }
 
-    public int percentNoRestrict() {
-        int totalMins = minsAdvisory + minsSwimBan + minsNoRestrict;
-        double per = 100.0 * minsNoRestrict/totalMins;
-        return (int) Math.round(per);
+    public double percentNoRestrict() {
+        return 100 -  (percentAdvisory() + percentBan());
     }
 
-    public int percentAdvisory() {
-        int totalMins = minsAdvisory + minsSwimBan + minsNoRestrict;
-        double per = 100.0 * minsAdvisory/totalMins;
-        return (int) Math.round(per);
+    public double percentAdvisory() {
+        return 100 * minsAdvisory / (minsAdvisory + minsSwimBan + minsNoRestrict);
     }
 
-    public int percentBan() {
-        int totalMins = minsAdvisory + minsSwimBan + minsNoRestrict;
-        double per = 100.0 * minsSwimBan/totalMins;
-        return (int) Math.round(per);
+    public double percentBan() {
+        return 100 * minsSwimBan / (minsAdvisory + minsSwimBan + minsNoRestrict);
     }
 }
