@@ -8,10 +8,12 @@
 var chart = new Highcharts.Chart({
         chart: {
             type: 'bar',
-            renderTo: 'graphContainer'
+            renderTo: 'graphContainer',
+            height: 800
         },
         yAxis: {
             min: 0,
+            max: 100,
             title: {
                 text: '% of Open Hours'
             }

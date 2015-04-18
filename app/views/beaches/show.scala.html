@@ -3,8 +3,63 @@
 @main("") {
     <h1>@beach.name</h1>
     <h3>Current status: @beach.currentStatus()</h3>
-
-    <div id="beachUrlCode" value="@beach.urlCode"></div>
+    
+    <script>
+    
+	    $( document ).ready(function() {
+	    	
+	    	drawPercentRestrictGauge(40.5);
+	    });
+	    
+	    function drawPercentRestrictGauge(percent) {
+		    var config2 = liquidFillGaugeDefaultSettings();
+		    config2.circleColor = "#D4AB6A";
+		    config2.textColor = "#553300";
+		    config2.waveTextColor = "#805615";
+		    config2.waveColor = "#AA7D39";
+		    config2.circleThickness = 0.1;
+		    config2.circleFillGap = 0.2;
+		    config2.textVertPosition = 0.8;
+		    config2.waveAnimateTime = 2000;
+		    config2.waveHeight = 0.3;
+		    config2.waveCount = 1;
+		    loadLiquidFillGauge("fillgauge3", percent, config2);
+	    }
+    
+    </script>
+    
+    <div class="container">
+    	<div class="row">
+    		<div class="col-sm-4">
+    			<div class="row">
+    				<h3>Time with swim restrictions</h3>
+    			</div>
+    			<div class="row">
+    				<svg id="fillgauge3" width="100%" height="200"></svg>
+    			</div>
+    		
+    		</div>
+    		<div class="col-sm-4">
+    			<div class="row">
+    				<h3>Drek Beach Rank 2015</h3>
+    			</div>
+    			<div class="row">
+    				<h1 style="text-align:center;">1</h1>
+    			</div>
+    		
+    		</div>
+    		<div class="col-sm-4">
+    			<div class="row">
+    				<h3>Current Streak</h3>
+    			</div>
+    			<div class="row">
+    				<h1 style="text-align:center;">No restrictions 2 days</h1>
+    			</div>
+    		
+    		</div>
+    	</div>
+    
+    </div>
 
     @defining(beach.getSeasonalStats) { seasonalStats =>
 
@@ -16,66 +71,16 @@
 
             $( document ).ready(function() {
 
-                alert($('#hoursAdvisory' ).val);
-
                 var data2 = [];
                 var noR = {label: "No Restrictions", value: $('#hoursNoRestrict' ).value};
-                alert(noR);
                 data2.push(noR);
-                alert(data2);
             });
 
-
-
-
-
         </script>
-/*
-            var data = [{"label":"Category A", "value":20},
-        {"label":"Category B", "value":50},
-        {"label":"Category C", "value":30}];
-
-
-
-
-    var w = 400;
-    var h = 400;
-    var r = h/2;
-    var color = d3.scale.category20c();
-
-    var data = [{"label":"Category A", "value":20},
-    {"label":"Category B", "value":50},
-    {"label":"Category C", "value":30}];
-
-
-    var vis = d3.select('#chart').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
-    var pie = d3.layout.pie().value(function(d){return d.value;});
-
-    // declare an arc generator function
-    var arc = d3.svg.arc().outerRadius(r);
-
-    // select paths, use arc generator to draw
-    var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-    arcs.append("svg:path")
-    .attr("fill", function(d, i){
-    return color(i);
-    })
-    .attr("d", function (d) {
-    // log the result of the arc generator to show how cool it is :)
-    console.log(arc(d));
-    return arc(d);
-    });
-
-    // add the text
-    arcs.append("svg:text").attr("transform", function(d){
-    d.innerRadius = 0;
-    d.outerRadius = r;
-    return "translate(" + arc.centroid(d) + ")";}).attr("text-anchor", "middle").text( function(d, i) {
-    return data[i].label;}
-    );
-    */
-
 
     }
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+    <script src="@routes.Assets.at("javascripts/liquidGauge.js")"></script>
 
 }
