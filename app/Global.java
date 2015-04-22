@@ -25,11 +25,14 @@ public class Global extends GlobalSettings {
             // if database is empty, pre-load database
             if (databaseEmpty()) {
                 readInBeaches(); // read in beaches
-                //createFakeData();
             }
-            //scrapeCron(); #TODO: Uncomment this
+
+            // If test mode, make fake data.  Otherwise, start scraping cron job
             if (controllers.Application.config.isTestMode()) {
                 makeFakeData();
+            }
+            else {
+            	scrapeCron();
             }
         }
         catch (Exception e) {
@@ -41,20 +44,22 @@ public class Global extends GlobalSettings {
 
     private void makeFakeData() {
         List<Beach> beachList = Beach.find.all();
-
+        
+        Random rand = new Random();
         for (Beach beach : beachList) {
             DateTime timeMarker = new DateTime();
+            int forecast = rand.nextInt(101) + 1;
+            int recentResult = rand.nextInt(101) + 1;
             for (int i = 0; i < 24; i ++) {
                 timeMarker = timeMarker.minusHours(1);
-                Random rand = new Random();
-                int randomNum = rand.nextInt((6 - 1) + 1) + 1;
+                int randomNum = rand.nextInt(6) + 1;
                 String swimStatus = BeachSnapshot.NO_RESTRICTIONS;
                 if (randomNum == 1)
                     swimStatus = BeachSnapshot.SWIM_BAN;
                 else if (randomNum <= 3)
                     swimStatus = BeachSnapshot.SWIM_ADVISORY;
 
-                BeachSnapshot snapshot = new BeachSnapshot(timeMarker, beach, swimStatus, 0, 0, null);
+                BeachSnapshot snapshot = new BeachSnapshot(timeMarker, beach, swimStatus, forecast, recentResult, null);
                 snapshot.save();
             }
         }
@@ -102,18 +107,6 @@ public class Global extends GlobalSettings {
     private boolean databaseEmpty() {
         List<Beach> beaches = Beach.find.all();
         return 0 == beaches.size();
-    }
-
-    // Create some fake data for testing purposes.
-    private void createFakeData() {
-
-        Beach beach = Beach.find.all().get(0);
-
-        DateTime now = new DateTime();
-
-        (new BeachSnapshot(now.minusHours(1), beach, BeachSnapshot.NO_RESTRICTIONS, 10, 12, "Aug 12")).save();
-        (new BeachSnapshot(now, beach, BeachSnapshot.SWIM_ADVISORY, 12, 15, "Aug 11")).save();
-
     }
 
     // Cron job that scrapes CPD site
