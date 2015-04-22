@@ -24,10 +24,4 @@ public class Application extends Controller {
     public static Result test() {
         return TODO;
     }
-
-    public static Result scrapeCpdAllBeaches() {
-        BeachScraper.scrapeAllCpdPages();;
-
-        return TODO;
-    }
 }

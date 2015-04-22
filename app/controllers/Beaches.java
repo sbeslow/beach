@@ -27,7 +27,6 @@ public class Beaches extends Controller {
         }
 
         return ok(views.html.beaches.show.render(beach));
-
     }
 
     public static List<Beach> scoreboard() {
@@ -37,16 +36,5 @@ public class Beaches extends Controller {
         beachList = BeachSorter.sortByShittiest(beachList);
         return beachList;
 
-    }
-    
-    public static Result listScoreboardBeaches() {
-        List<Beach> beachList = Beach.find.all();
-        beachList = BeachSorter.sortByShittiest(beachList);
-        String retVal = "";
-        for (Beach beach : beachList) {
-        	retVal += "'" + beach.name + "',";
-        }
-        retVal = retVal.substring(0, retVal.length()-1);
-        return ok(retVal);    	
     }
 }

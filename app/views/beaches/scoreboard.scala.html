@@ -11,6 +11,14 @@ var chart = new Highcharts.Chart({
             renderTo: 'graphContainer',
             height: 800
         },
+        xAxis: {
+            labels: {
+                formatter: function () {
+                	return redirectToBeachPage(this.value);
+                },
+                useHTML: true
+            }
+        },
         yAxis: {
             min: 0,
             max: 100,
@@ -33,7 +41,9 @@ var chart = new Highcharts.Chart({
             enabled: false
         }
     });
-    
+   
+var beachNameToUrlMapping = {};
+
 $.getJSON('/api/scoreboard', function(data) {
 	beachNames = [];
 	bans = [];
@@ -62,5 +72,9 @@ $.getJSON('/api/scoreboard', function(data) {
         color: '#6600FF'
     });
 });
+
+function redirectToBeachPage(beachName) {
+	return beachName;
+}
 
 </script>

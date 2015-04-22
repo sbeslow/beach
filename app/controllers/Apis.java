@@ -9,24 +9,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import dataManagement.BeachSorter;
 import beachNinja.SeasonalStats;
 import models.Beach;
+import models.BeachSnapshot;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 public class Apis extends Controller {
-
-    public static Result advisories(String beachUrlCode) {
-
-        try {
-            Beach beach = Beach.find.where().eq("urlCode", beachUrlCode).findUnique();
-            SeasonalStats seasonalStats = beach.getSeasonalStats();
-            return ok(Json.toJson(seasonalStats));
-
-        }
-        catch (Exception e) {
-            return ok("{}");
-        }
-    }
     
     public static Result scoreboard() {
         // If I cared about speed here, I should be writing SQL to get the list in order.  But, I don't.
@@ -48,5 +36,33 @@ public class Apis extends Controller {
         	rank++;
         }
         return ok(beachesNode);
+    }
+    
+    public static Result ecoli(String beachUrl) {
+    	
+    	List<BeachSnapshot> snapshots = BeachSnapshot.find.where().eq("beach.urlCode", beachUrl).orderBy("scrapeTime asc") .findList();
+    	if (snapshots.size() == 0) {
+    		return TODO;
+    	}
+    	
+    	JsonNodeFactory factory = JsonNodeFactory.instance;
+        ArrayNode ecoliNode = factory.arrayNode();
+        
+        ObjectNode beachEcoliNode = Json.newObject();
+        
+        
+        beachEcoliNode.put("beachName", snapshots.get(0).beach.name);
+        
+        for (BeachSnapshot snapshot : snapshots) {
+        	ObjectNode readingNode = Json.newObject();
+        	readingNode.put("dateTime", snapshot.scrapeTime.getMillis());
+        	readingNode.put("forecast", snapshot.forecastForToday);
+        	readingNode.put("result", snapshot.mostRecentResult);
+        	ecoliNode.add(readingNode);
+        	
+        }
+        beachEcoliNode.put("readings", ecoliNode);
+    	
+    	return ok(beachEcoliNode);
     }
 }

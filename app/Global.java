@@ -23,13 +23,15 @@ public class Global extends GlobalSettings {
     public void onStart(Application app) {
         try {
             // if database is empty, pre-load database
-            if (databaseEmpty()) {
+        	boolean databaseReset = databaseEmpty();
+            if (databaseReset) {
                 readInBeaches(); // read in beaches
             }
 
             // If test mode, make fake data.  Otherwise, start scraping cron job
             if (controllers.Application.config.isTestMode()) {
-                makeFakeData();
+                if (databaseReset)
+                	makeFakeData();
             }
             else {
             	scrapeCron();

@@ -1,0 +1,70 @@
+@(beach: Beach)
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="eColiChart" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+
+<div id="beachUrl" value="@beach.urlCode"></div>
+
+<script>
+var beachUrl = '@beach.urlCode';
+
+var chart = new Highcharts.Chart({
+        chart: {
+            type: 'spline',
+            renderTo: 'eColiChart'
+        },
+        title: {
+            text: 'E-Coli levels at the Beach'
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            },
+            title: {
+                text: 'Date'
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'Snow depth (m)'
+            },
+            min: 0
+        },
+        tooltip: {
+            headerFormat: '<b>{series.name}</b><br>',
+            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+        },
+
+        plotOptions: {
+            spline: {
+                marker: {
+                    enabled: true
+                }
+            }
+        }
+});
+
+$.getJSON('/api/ecoli/' + beachUrl, function(data) {
+	forecasts = [];
+
+    $.each(data.readings, function(index, element) {
+    	var theDateTime = new Date(element.dateTime);
+    	var forecast = [];
+    	forecast.push(theDateTime);
+    	forecast.push(element.forecast);
+    	forecasts.push(forecast);
+
+    });
+
+   // chart.xAxis[0].setCategories(beachNames);
+    chart.addSeries({
+        name: "No Restrictions",
+        data: forecasts,
+        color: '#009933'
+	});
+});
+</script>

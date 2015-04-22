@@ -5,11 +5,9 @@
 # Home page
 GET        /                                    controllers.Application.index()
 GET        /beach/:urlCode                      controllers.Beaches.show(urlCode: String)
-GET        /scrapeBeaches                       controllers.Application.scrapeCpdAllBeaches()
 
-GET        /api/advisories/:beachUrlCode        controllers.Apis.advisories(beachUrlCode : String)
 GET			/api/scoreboard						controllers.Apis.scoreboard()
-GET			/scoreboard/beaches					controllers.Beaches.listScoreboardBeaches()
+GET			/api/ecoli/:beachUrl				controllers.Apis.ecoli(beachUrl: String)
 
 GET        /test                                controllers.Application.test()
 
