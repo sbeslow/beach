@@ -37,4 +37,8 @@ public class Beaches extends Controller {
         return beachList;
 
     }
+    
+    public static List<Beach> beachList() {
+    	return Beach.find.all();
+    }
 }
