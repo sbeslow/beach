@@ -1,7 +1,7 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
 
-<div id="graphContainer" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+<div id="graphContainer" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto; margin-bottom: 400px;"></div>
 
 <script>
 
@@ -24,10 +24,14 @@ var chart = new Highcharts.Chart({
             max: 100,
             title: {
                 text: '% of Open Hours'
-            }
+            },
+            opposite: true
         },
         legend: {
-            reversed: true
+            reversed: true,
+            align:'center',
+            verticalAlign:'top'
+
         },
         plotOptions: {
             series: {
@@ -69,7 +73,7 @@ $.getJSON('/api/scoreboard', function(data) {
     chart.addSeries({
         name: "Swim Ban",
         data: bans,
-        color: '#6600FF'
+        color: 'saddlebrown'
     });
 });
 
