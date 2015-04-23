@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import dataManagement.BeachSorter;
-import beachNinja.SeasonalStats;
 import models.Beach;
 import models.BeachSnapshot;
 import play.libs.Json;
@@ -28,6 +27,7 @@ public class Apis extends Controller {
         for (Beach beach : beachList) {
         	ObjectNode beachNode = Json.newObject();
         	beachNode.put("name", beach.name);
+        	beachNode.put("urlCode", beach.urlCode);
         	beachNode.put("rank", rank);
         	beachNode.put("noRestrict", beach.getSeasonalStats().percentNoRestrict());
         	beachNode.put("advisory", beach.getSeasonalStats().percentAdvisory());

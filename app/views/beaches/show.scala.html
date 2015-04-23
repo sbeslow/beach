@@ -64,25 +64,6 @@
     <div class="container">
     	@ecoliAtBeachOvertime(beach)
     </div>
-
-    @defining(beach.getSeasonalStats) { seasonalStats =>
-
-        <H5 id="hoursNoRestrict" value="@seasonalStats.getMinsNoRestrict">Hours with no swimming restrictions: @seasonalStats.getMinsNoRestrict</H5>
-        <h5 id="hoursAdvisory" value="@seasonalStats.getMinsAdvisory">Hours with a swim advisory: @seasonalStats.getMinsAdvisory</h5>
-        <h5 id="hoursBan" value="@seasonalStats">Hours with a swim ban @seasonalStats.getMinsSwimBan</h5>
-
-        <script>
-
-            $( document ).ready(function() {
-
-                var data2 = [];
-                var noR = {label: "No Restrictions", value: $('#hoursNoRestrict' ).value};
-                data2.push(noR);
-            });
-
-        </script>
-
-    }
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script src="@routes.Assets.at("javascripts/liquidGauge.js")"></script>

@@ -53,11 +53,13 @@ $.getJSON('/api/scoreboard', function(data) {
 	bans = [];
 	noRestrict = [];
 	advisory = [];
+	beachNameToUrlMap = {};
     $.each(data, function(index, element) {
     	beachNames.push(element.name);
     	bans.push(element.ban);
     	noRestrict.push(element.noRestrict);
     	advisory.push(element.advisory);
+    	beachNameToUrlMap[element.name] = element.urlCode + ";" + element.rank;
     });
     chart.xAxis[0].setCategories(beachNames);
     chart.addSeries({
@@ -78,7 +80,11 @@ $.getJSON('/api/scoreboard', function(data) {
 });
 
 function redirectToBeachPage(beachName) {
-	return beachName;
+	var beachUrlAndRank = beachNameToUrlMap[beachName].split(";");
+	var urlCode = beachUrlAndRank[0];
+	var rank = beachUrlAndRank[1];
+	
+	return '<a href="/beach/' + urlCode + '">' + rank + '. ' + beachName + '</a>';
 }
 
 </script>
