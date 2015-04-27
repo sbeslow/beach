@@ -1,14 +1,27 @@
 @(beach: Beach)
 
 @main("") {
-    <h1>@beach.name</h1>
-    <h3>Current status: @beach.currentStatus()</h3>
-    
-    <script>
+	<style>
+		span.rankNumber {
+		   border-radius: 0.8em;
+		  -moz-border-radius: 0.8em;
+		  -webkit-border-radius: 0.8em;
+		  color: #ffffff;
+		  display: inline-block;
+		  font-weight: bold;
+		  line-height: 1.6em;
+		  margin-right: 15px;
+		  text-align: center;
+		  width: 1.6em;
+		  font-size: 300%;
+		}
+	</style>
+	
+	<script>
     
 	    $( document ).ready(function() {
 	    	
-	    	drawPercentRestrictGauge(40.5);
+	    	drawPercentRestrictGauge(@beach.getSeasonalStats().percentWithRestriction());
 	    });
 	    
 	    function drawPercentRestrictGauge(percent) {
@@ -27,39 +40,29 @@
 	    }
     
     </script>
-    
-    <div class="container">
-    	<div class="row">
-    		<div class="col-sm-4">
-    			<div class="row">
-    				<h3>Time with swim restrictions</h3>
-    			</div>
-    			<div class="row">
-    				<svg id="fillgauge3" width="100%" height="200"></svg>
-    			</div>
-    		
+
+	<div class="container">
+		<div class="col-sm-4">
+			<h1 style="text-align:center;">@beach.name</h1>
+		</div>
+		<div class="col-sm-4">
+			<div class="row">
+				<h4 style="text-align:center;">Current rank</h4>
+			</div>
+			<div class="row">
+				<h1 style="text-align:center"><span class="rankNumber" style="background: red;">@controllers.Beaches.rank(beach.urlCode)</span></h1>
+			</div>
+		</div>
+		<div class="col-sm-4">
+    		<div class="row">
+    			<h3 style="text-align:center">Time with swim restrictions</h3>
     		</div>
-    		<div class="col-sm-4">
-    			<div class="row">
-    				<h3>Drek Beach Rank 2015</h3>
-    			</div>
-    			<div class="row">
-    				<h1 style="text-align:center;">1</h1>
-    			</div>
-    		
+    		<div class="row">
+    			<svg id="fillgauge3" width="100%" height="200" style="text-align:center"></svg>
     		</div>
-    		<div class="col-sm-4">
-    			<div class="row">
-    				<h3>Current Streak</h3>
-    			</div>
-    			<div class="row">
-    				<h1 style="text-align:center;">No restrictions 2 days</h1>
-    			</div>
     		
-    		</div>
     	</div>
-    
-    </div>
+	</div>
     
     <div class="container">
     	@ecoliAtBeachOvertime(beach)

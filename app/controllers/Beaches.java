@@ -25,7 +25,7 @@ public class Beaches extends Controller {
             }
             return badRequest("ERRORCODE:2");
         }
-
+        beach.getSeasonalStats(); // Calculate the seasonal stats here.
         return ok(views.html.beaches.show.render(beach));
     }
 
@@ -40,5 +40,17 @@ public class Beaches extends Controller {
     
     public static List<Beach> beachList() {
     	return Beach.find.all();
+    }
+    
+    public static int rank(String beachUrl) {
+    	List<Beach> scoreboard = scoreboard();
+    	int i = 1;
+    	for (Beach beach: scoreboard) {
+    		if (beach.urlCode.equals(beachUrl)) {
+    			return i;
+    		}
+    		i++;
+    	}
+    	return 100;
     }
 }

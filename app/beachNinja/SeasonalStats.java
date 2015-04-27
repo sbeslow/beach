@@ -1,5 +1,9 @@
 package beachNinja;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 import models.Beach;
 import models.BeachSnapshot;
 
@@ -65,5 +69,18 @@ public class SeasonalStats {
 
     public double percentBan() {
         return 100 * minsSwimBan / (minsAdvisory + minsSwimBan + minsNoRestrict);
+    }
+    
+    public double percentWithRestriction() {
+    	double percentWithRest = 100 - percentNoRestrict();
+    	return round(percentWithRest, 1);
+    }
+    
+    private static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
