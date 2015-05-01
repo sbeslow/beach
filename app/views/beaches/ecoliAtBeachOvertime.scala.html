@@ -11,59 +11,50 @@
 var beachUrl = '@beach.urlCode';
 
 var chart = new Highcharts.Chart({
-        chart: {
-            type: 'spline',
-            renderTo: 'eColiChart'
-        },
+	chart: {
+		renderTo: 'eColiChart'
+	},
+    title: {
+        text: 'Monthly Average Temperature',
+        x: -20 //center
+    },
+    subtitle: {
+        text: 'Source: WorldClimate.com',
+        x: -20
+    },
+    yAxis: {
         title: {
-            text: 'E-Coli levels at the Beach'
+            text: 'Temperature (°C)'
         },
-        xAxis: {
-            type: 'datetime',
-            dateTimeLabelFormats: { // don't display the dummy year
-                month: '%e. %b',
-                year: '%b'
-            },
-            title: {
-                text: 'Date'
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Snow depth (m)'
-            },
-            min: 0
-        },
-        tooltip: {
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-        },
+        plotLines: [{
+            value: 0,
+            width: 1,
+            color: '#808080'
+        }]
+    },
+    tooltip: {
+        valueSuffix: '°C'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+        borderWidth: 0
+    }
 
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: true
-                }
-            }
-        },
-        credits: {
-            enabled: false
-        }
 });
 
 $.getJSON('/api/ecoli/' + beachUrl, function(data) {
 	forecasts = [];
+	timeLine = [];
 
     $.each(data.readings, function(index, element) {
-    	var theDateTime = new Date(element.dateTime);
-    	var forecast = [];
-    	forecast.push(theDateTime);
-    	forecast.push(element.forecast);
-    	forecasts.push(forecast);
+    	timeLine.push(element.dateTime);
+    	forecasts.push(element.forecast);
 
     });
 
-   // chart.xAxis[0].setCategories(beachNames);
+   	chart.xAxis[0].setCategories(timeLine);
     chart.addSeries({
         name: "No Restrictions",
         data: forecasts,
