@@ -2,61 +2,36 @@
 
 @main("Drek Beach Chicago") {
 
-    <div class="container">
-        <div class="col-xs-2">
-            <div id="shareButtons" style="text-align: center;display: none;">
-                <a href="https://twitter.com/share" class="twitter-share-button" data-text="The battle to be Chicago's most crap-filled beach is on!" data-size="large" data-hashtags="drekbeachchicago">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+<div id="leadDiv">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-5">
+				@graphics.logo()
+			</div>
+			<div class="col-sm-7">
+				<h1 style="text-align:center;padding-top:20px;">the battle to be Chicago's most poop-filled beach 2015</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<hr>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-offset-1 col-sm-offset-4">
+			@subDivs.socialMediaButtons()
+		</div>
+	</div>
+</div>
 
-                <div id="fb-root"></div>
-                <script>(function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=1417308148493007";
-                fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));</script>
-                <div class="fb-share-button" data-href="http://beachapp.cloudapp.net/" data-layout="button_count"></div>
-            </div>
-        </div>
-        <div class="col-xs-10">
-            <h2 style="text-align: center">The battle to be Chicago's most poop-filled beach 2015</h2>
-        </div>
-
-
-
-    </div>
-    <div class="container">
-        <div class="row">
-            @beaches.scoreboard()
-            <p style="text-align: center;">Last Updated: XXX</p>
-        </div>
-    </div>
-
-    <div id="whatIsThis" class="container">
-        <h1 style="text-align: center">What is this?</h1>
-        <div class="row">
-            <div class="col-sm-7" style="padding-bottom: 30px; text-align: center">
-                	The U.S. Environmental Protection Agency and state health department requires cities to issue
-                	swim advisories or bans when there are elevated level of fecal bacteria in the beach water.<br>
-                	This site is simply tracking the data on how often this is happening, and making it available to the
-                	public.<br>
-                    Chicago has XX public beaches that are open for swimming from Memorial Day weekend until Labor Day.
-                    According to the Clean Water Act, it is considered unsafe to swim in water with a fecal count of
-                    over 2XX parts per awesome.  Drek Beach Chicago is an open-source, open-data
-                    project by @@sbeslow and @@open-city.  Feel free to use the code and data for anything.
-            </div>
-            <div class="col-sm-4 col-sm-offset-1">
-            	<ul>
-            		<li>Swim bans are required when levels reach 1000 cfu/100 ml or above</li>
-            		<li>swim advisories when bacteria levels reach 235 cfu/100 ml or above</li>
-            		<li>No restrictions for levels below 235</li>
-            	</ul>
-            </div>
-        </div>
-
-
-
-    </div>
-
+<div id="scoreboardDiv">
+	<div class="container">
+		<div class="row">
+		
+			<h2>The Scoreboard</h2>
+		
+		</div>
+		
+	</div>
+</div>
 
 }

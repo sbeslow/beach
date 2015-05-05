@@ -15,6 +15,8 @@ import java.util.List;
 public abstract class BeachScraper {
 
     private static void scrapeCpdPage(Beach beach) throws Exception {
+    	
+    	System.out.println("Scraping beach: " + beach.name);
 
         Document doc;
 

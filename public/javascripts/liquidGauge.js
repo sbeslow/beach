@@ -48,7 +48,8 @@ function loadLiquidFillGauge(elementId, value, config) {
 	var textPixels = (config.textSize * radius / 2);
 	var textFinalValue = parseFloat(value).toFixed(2);
 	var textStartValue = config.valueCountUp ? config.minValue : textFinalValue;
-	var percentText = config.displayPercent ? "%" : "";
+	//var percentText = config.displayPercent ? "%" : "";
+	var percentText = "Drek Beach";
 	var circleThickness = config.circleThickness * radius;
 	var circleFillGap = config.circleFillGap * radius;
 	var fillCircleMargin = circleThickness + circleFillGap;
@@ -126,7 +127,8 @@ function loadLiquidFillGauge(elementId, value, config) {
 
 	// Text where the wave does not overlap.
 	var text1 = gaugeGroup.append("text").text(
-			textRounder(textStartValue) + percentText).attr("class",
+			//textRounder(textStartValue) + percentText).attr("class",
+			percentText).attr("class",
 			"liquidFillGaugeText").attr("text-anchor", "middle").attr(
 			"font-size", textPixels + "px").style("fill", config.textColor)
 			.attr(
@@ -157,7 +159,8 @@ function loadLiquidFillGauge(elementId, value, config) {
 
 	// Text where the wave does overlap.
 	var text2 = fillCircleGroup.append("text").text(
-			textRounder(textStartValue) + percentText).attr("class",
+			//textRounder(textStartValue) + percentText).attr("class",
+			percentText).attr("class",
 			"liquidFillGaugeText").attr("text-anchor", "middle").attr(
 			"font-size", textPixels + "px").style("fill", config.waveTextColor)
 			.attr(
@@ -170,7 +173,8 @@ function loadLiquidFillGauge(elementId, value, config) {
 		var textTween = function() {
 			var i = d3.interpolate(this.textContent, textFinalValue);
 			return function(t) {
-				this.textContent = textRounder(i(t)) + percentText;
+				this.textContent = percentText;
+				// this.textContent = textRounder(i(t)) + percentText;
 			}
 		};
 		text1.transition().duration(config.waveRiseTime).tween("text",
