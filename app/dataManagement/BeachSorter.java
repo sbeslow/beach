@@ -11,29 +11,28 @@ public abstract class BeachSorter {
 
 
     public static List<Beach> sortByShittiest(List<Beach> beachList) {
-        HashMap<Beach, Integer> map = new HashMap<>();
+        HashMap<Beach, Double> map = new HashMap<>();
         ValueComparator bvc = new ValueComparator(map);
-        TreeMap<Beach, Integer> sorted_map = new TreeMap<Beach, Integer>(bvc);
+        TreeMap<Beach, Double> sorted_map = new TreeMap<Beach, Double>(bvc);
 
         for (Beach beach : beachList) {
             map.put(beach, beach.getSeasonalStats().score());
         }
 
         sorted_map.putAll(map);
-
         return new ArrayList<>(sorted_map.keySet());
     }
 }
 
 class ValueComparator implements Comparator<Beach> {
 
-    Map<Beach, Integer> base;
-    public ValueComparator(Map<Beach, Integer> base) {
+    Map<Beach, Double> base;
+    public ValueComparator(Map<Beach, Double> base) {
         this.base = base;
     }
 
     // Note: this comparator imposes orderings that are inconsistent with equals.
-    public int compare(Integer a, Integer b) {
+    public int compare(Double a, Double b) {
         if (base.get(a) >= base.get(b)) {
             return -1;
         } else {

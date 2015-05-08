@@ -1,15 +1,12 @@
 package controllers;
 
-import beachNinja.Config;
-import models.Beach;
-import models.SignificantError;
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import play.mvc.*;
-
-import views.html.*;
-import beachNinja.BeachScraper;
-
 import java.util.List;
+
+import models.Beach;
+import dataManagement.BeachSorter;
+import beachNinja.Config;
+import play.mvc.*;
+import views.html.*;
 
 public class Application extends Controller {
 
@@ -18,7 +15,11 @@ public class Application extends Controller {
     public static final boolean productionMode = false;
 
     public static Result index() {
-        return ok(index.render("Your new application is ready."));
+        // If I cared about speed here, I should be writing SQL to get the list in order.  But, I don't.
+        List<Beach> beachList = Beach.find.all();
+        beachList = BeachSorter.sortByShittiest(beachList);
+    	
+        return ok(index.render(beachList));
     }
 
     public static Result test() {

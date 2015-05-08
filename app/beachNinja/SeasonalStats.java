@@ -54,9 +54,9 @@ public class SeasonalStats {
         }
     }
 
-    public Integer score() {
+    public double score() {
         int score = minsAdvisory;
-        return score + (2 * minsSwimBan);
+        return (score + (2 * minsSwimBan)) / 600.0;
     }
 
     public double percentNoRestrict() {
