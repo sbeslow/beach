@@ -4,19 +4,34 @@
 </div>
 
 <table class="table table-hover">
-	<thead>
-		<th>Rank</th>
-		<th>Beach</th>
-		<th>Poo Score</th>
-	</thead>
-	<tbody>
-		@for((aBeach, rank) <- beachList.zipWithIndex) {
-		<tr>
-			<td>@(rank + 1)</td>
-			<td>@aBeach.name</td>
-			<td>@aBeach.getSeasonalStats().score()</td>
-		</tr>
-		}
-	
-	</tbody>
+    <thead>
+        <th>Rank</th>
+        <th>Beach</th>
+        <th>Poo Score</th>
+    </thead>
+    <tbody>
+        @for((aBeach, rank) <- beachList.zipWithIndex) {
+            <tr>
+                <td>@(rank + 1)</td>
+                <td>@aBeach.name</td>
+                <td>@aBeach.getSeasonalStats().score()</td>
+            </tr>
+
+            @if(rank == 10){
+                    </tbody>
+                </table>
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    Show Rest of List
+                </button>
+
+                <div class="collapse" id="collapseExample">
+                    <div class="well">
+
+                        <table class="table table-hover">
+                            <tbody>
+            }
+        }
+    </tbody>
 </table>
+</div>
+</div>
