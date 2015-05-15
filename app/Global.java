@@ -1,4 +1,5 @@
 import beachNinja.BeachScraper;
+import dataManagement.CronMan;
 import models.Beach;
 import models.BeachSnapshot;
 import models.SignificantError;
@@ -34,7 +35,7 @@ public class Global extends GlobalSettings {
                 	makeFakeData();
             }
             else {
-            	scrapeCron();
+                CronMan.scrapeBeachSites();
             }
         }
         catch (Exception e) {
@@ -111,34 +112,4 @@ public class Global extends GlobalSettings {
         return 0 == beaches.size();
     }
 
-    // Cron job that scrapes CPD site
-    private void scrapeCron() {
-
-        try {
-
-            DateTime now = new DateTime();
-            DateTime inAnHour = now.plusHours(1);
-            DateTime nextHour = new DateTime(inAnHour.getYear(), inAnHour.getMonthOfYear(), inAnHour.getDayOfMonth(),
-                    inAnHour.getHourOfDay(), 0, inAnHour.getSecondOfMinute());
-            int secondsTillTopOfHour = ((int) (nextHour.getMillis() - now.getMillis())) / 1000;
-
-            FiniteDuration delay = FiniteDuration.create(secondsTillTopOfHour, TimeUnit.SECONDS);
-            FiniteDuration frequency = FiniteDuration.create(30, TimeUnit.MINUTES);
-
-            Runnable showTime = new Runnable() {
-                @Override
-                public void run() {
-                	logger.info("Running scrape");
-                    // TODO: Check time and don't run after 7:00PM
-                    BeachScraper.scrapeAllCpdPages();
-                }
-            };
-
-            Akka.system().scheduler().schedule(delay, frequency, showTime, Akka.system().dispatcher());
-        }
-        catch (Exception e) {
-            SignificantError.write(e);
-            e.printStackTrace();
-        }
-    }
 }
