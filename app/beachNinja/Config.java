@@ -14,6 +14,7 @@ public class Config {
         else {
             testMode = true;
         }
+        System.out.println("Test mode is set to: " + testMode);
 
     }
 

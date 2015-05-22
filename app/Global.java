@@ -35,7 +35,7 @@ public class Global extends GlobalSettings {
                 	makeFakeData();
             }
             else {
-                CronMan.scrapeBeachSites();
+                startScrapingCron();
             }
         }
         catch (Exception e) {
@@ -110,6 +110,25 @@ public class Global extends GlobalSettings {
     private boolean databaseEmpty() {
         List<Beach> beaches = Beach.find.all();
         return 0 == beaches.size();
+    }
+
+    private void startScrapingCron() {
+        DateTime now = new DateTime();
+
+        int minutesOfHour = now.getMinuteOfHour();
+        int minutesTillStart = 0;
+        if (minutesOfHour <= 15)
+            minutesTillStart = 15 - minutesOfHour;
+        else if (minutesOfHour <= 30)
+            minutesTillStart = 30 - minutesOfHour;
+        else if (minutesOfHour <= 45)
+            minutesTillStart = 45 - minutesOfHour;
+        else
+            minutesTillStart = 60 - minutesOfHour;
+
+        System.out.println("Starting scraping CPD in " + minutesTillStart + " minutes");
+
+        CronMan.scrapeBeachSites(minutesTillStart);
     }
 
 }

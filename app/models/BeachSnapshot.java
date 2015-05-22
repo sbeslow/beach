@@ -31,8 +31,8 @@ public class BeachSnapshot extends Model {
     public static Finder<Long,BeachSnapshot> find = new Finder<>(
             Long.class, BeachSnapshot.class
     );
-    public int forecastForToday;
-    public int mostRecentResult;
+    public Integer forecastForToday;
+    public Integer mostRecentResult;
     public String resultCollected;
 
     public BeachSnapshot(Beach beach) {

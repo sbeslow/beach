@@ -1,10 +1,8 @@
 package dataManagement;
 
 import beachNinja.BeachScraper;
-import helpers.TimeUtils;
-import models.SignificantError;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 import play.Logger;
 import play.libs.Akka;
@@ -18,35 +16,22 @@ public abstract class CronMan {
     private static final Logger.ALogger logger = Logger.of(CronMan.class);
 
     // Cron job that scrapes CPD beach sites
-    public static void scrapeBeachSites() {
+    public static void scrapeBeachSites(int minutesToStart) {
 
         try {
 
-            DateTime now = new DateTime();
-
-            LocalTime sevenPm = new LocalTime(19, 0, 0);
-            int minutesToStartScraping = 0;
-            if (now.plusMinutes(2).toLocalTime().isAfter(sevenPm)) {
-                LocalDate tomorrow = now.plusDays(1).toLocalDate();
-                DateTime elevenAmTomorrow = new DateTime(tomorrow.getYear(), tomorrow.getMonthOfYear(),
-                        tomorrow.getDayOfMonth(), 11, 0, 0);
-
-                minutesToStartScraping = TimeUtils.minutesDifference(now, elevenAmTomorrow);
-            }
-
-
-            FiniteDuration delay = FiniteDuration.create(minutesToStartScraping, TimeUnit.MINUTES);
+            FiniteDuration delay = FiniteDuration.create(minutesToStart, TimeUnit.MINUTES);
             FiniteDuration frequency = FiniteDuration.create(15, TimeUnit.MINUTES);
 
-            Runnable showTime = new Runnable() {
+            Runnable runScraper = new Runnable() {
                 @Override
                 public void run() {
 
                     DateTime now = new DateTime();
 
-                    LocalTime sevenPm = new LocalTime(19, 0, 0);
-
-                    if (now.toLocalTime().isBefore(new LocalTime(11, 0, 0))) {
+                    // Only collect between11 AM and 7PM.  Allow 2 minute buffer after 7:00
+                    if ((now.toLocalTime().isBefore(new LocalTime(11, 0, 0))) ||
+                            (now.toLocalTime().isAfter(new LocalTime(19, 2, 0)))) {
                         return;
                     }
                     logger.info("Running scrape");
@@ -55,11 +40,12 @@ public abstract class CronMan {
                 }
             };
 
-            Akka.system().scheduler().schedule(delay, frequency, showTime, Akka.system().dispatcher());
+            Akka.system().scheduler().schedule(delay, frequency, runScraper, Akka.system().dispatcher());
+
+
         }
         catch (Exception e) {
-            SignificantError.write(e);
-            e.printStackTrace();
+            logger.error(ExceptionUtils.getStackTrace(e));
         }
     }
 }
