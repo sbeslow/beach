@@ -11,5 +11,5 @@ libraryDependencies ++= Seq(
   javaEbean,
   cache,
   "org.jsoup" % "jsoup" % "1.8.1",
-  "postgresql" % "postgresql" % "9.1-901.jdbc4"
+  "mysql" % "mysql-connector-java" % "5.1.35"
 )

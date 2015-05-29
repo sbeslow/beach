@@ -31,16 +31,16 @@ public class BeachSnapshot extends Model {
     public static Finder<Long,BeachSnapshot> find = new Finder<>(
             Long.class, BeachSnapshot.class
     );
-    public Integer forecastForToday;
-    public Integer mostRecentResult;
+    public Double forecastForToday;
+    public Double mostRecentResult;
     public String resultCollected;
 
     public BeachSnapshot(Beach beach) {
         this.beach = beach;
     }
 
-    public BeachSnapshot(DateTime scrapeTime, Beach beach, String swimStatus, int forecastForToday,
-                         int mostRecentResult, String resultCollected) {
+    public BeachSnapshot(DateTime scrapeTime, Beach beach, String swimStatus, Double forecastForToday,
+                         Double mostRecentResult, String resultCollected) {
         this.scrapeTime = scrapeTime;
         this.beach = beach;
         this.swimStatus = swimStatus;

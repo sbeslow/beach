@@ -56,14 +56,14 @@ public abstract class BeachScraper {
 
         Elements tableRows = bSnap.getElementsByTag("td");
         try {
-            beachSnapshot.forecastForToday = Integer.parseInt(tableRows.get(1).childNode(0).toString().trim());
+            beachSnapshot.forecastForToday = Double.parseDouble(tableRows.get(1).childNode(0).toString().trim());
         }
         catch (Exception e) {
             beachSnapshot.forecastForToday = null;
             logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
         }
         try {
-            beachSnapshot.mostRecentResult = Integer.parseInt(tableRows.get(3).childNode(0).toString().trim());
+            beachSnapshot.mostRecentResult = Double.parseDouble(tableRows.get(3).childNode(0).toString().trim());
         }
         catch (Exception e) {
             beachSnapshot.mostRecentResult = null;

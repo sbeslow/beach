@@ -1,25 +1,19 @@
-import beachNinja.BeachScraper;
+
 import dataManagement.CronMan;
 import models.Beach;
 import models.BeachSnapshot;
-import models.SignificantError;
+
 
 import org.joda.time.DateTime;
 
 import play.*;
-import play.Logger.ALogger;
-import play.libs.Akka;
-import scala.concurrent.duration.FiniteDuration;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Global extends GlobalSettings {
-	
-	private static final ALogger logger = Logger.of(Global.class);
 
     public void onStart(Application app) {
         try {
@@ -51,8 +45,8 @@ public class Global extends GlobalSettings {
         Random rand = new Random();
         for (Beach beach : beachList) {
             DateTime timeMarker = new DateTime();
-            int forecast = rand.nextInt(101) + 1;
-            int recentResult = rand.nextInt(101) + 1;
+            double forecast = Double.parseDouble(Integer.toString(rand.nextInt(101)) + 1);
+            double recentResult = Double.parseDouble(Integer.toString(rand.nextInt(101)) + 1);
             for (int i = 0; i < 24; i ++) {
                 timeMarker = timeMarker.minusHours(1);
                 int randomNum = rand.nextInt(6) + 1;
@@ -116,7 +110,7 @@ public class Global extends GlobalSettings {
         DateTime now = new DateTime();
 
         int minutesOfHour = now.getMinuteOfHour();
-        int minutesTillStart = 0;
+        int minutesTillStart;
         if (minutesOfHour <= 15)
             minutesTillStart = 15 - minutesOfHour;
         else if (minutesOfHour <= 30)
