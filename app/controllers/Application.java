@@ -6,23 +6,31 @@ import models.Beach;
 import dataManagement.BeachSorter;
 import beachNinja.Config;
 import play.mvc.*;
+import models.Scoreboard;
 import views.html.*;
 
 public class Application extends Controller {
 
     public static final Config config = new Config();
 
-    public static final boolean productionMode = false;
+    private static Scoreboard scoreboard = null;
 
     public static Result index() {
-        // If I cared about speed here, I should be writing SQL to get the list in order.  But, I don't.
-        List<Beach> beachList = Beach.find.all();
-        beachList = BeachSorter.sortByShittiest(beachList);
     	
-        return ok(index.render(beachList));
+        return ok(index.render(getScoreboard()));
     }
 
     public static Result test() {
         return TODO;
+    }
+
+    public static Scoreboard getScoreboard() {
+        if (scoreboard == null)
+            scoreboard = new Scoreboard();
+        return scoreboard;
+    }
+
+    public static void updateScoreboard() {
+        scoreboard = new Scoreboard();
     }
 }

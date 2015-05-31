@@ -1,12 +1,12 @@
 
-	<svg id="fillgauge3" width="100%" height="100%"
-		style="text-align: center"></svg>
+<svg id="fillgauge3" width="140px" height="100px"
+		style="text-align: center;"></svg>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script src="@routes.Assets.at("javascripts/liquidGauge.js")"></script>
 <script>
 	var config2 = liquidFillGaugeDefaultSettings();
 	config2.circleColor = "#D4AB6A";
-	config2.textColor = "#553300";
+	config2.textColor = "white";
 	config2.waveTextColor = "#805615";
 	config2.waveColor = "#AA7D39";
 	config2.circleThickness = 0.1;
@@ -15,5 +15,5 @@
 	config2.waveAnimateTime = 2000;
 	config2.waveHeight = 0.3;
 	config2.waveCount = 1;
-	loadLiquidFillGauge("fillgauge3", 50.5, config2);
+	loadLiquidFillGauge("fillgauge3", 57, config2);
 </script>

@@ -1,61 +1,69 @@
-@(beachList: List[Beach])
+@(scoreboard: Scoreboard)
 
-@main("Drek Beach Chicago") {
+    @main("Drek Beach Chicago") {
 
-<div id="topOfPage">
-	<div class="container">
-		<div class="col-xs-12 col-sm-6">
-			@graphics.leaderboard(beachList)
-			
-		</div>
-		<div class="col-sm-6">
-			<div class="row">
-			
-				@graphics.logo()
-			</div>
-			<div class="row">
-				<h2 style="text-align:center;padding-top:20px;">the battle to be Chicago's most poop-filled beach 2015</h2>
-			</div>
-		</div>
+        <div class="container" id="topOfPage">
 
-	</div>
-</div>
+            <div class="col-xs-12">
+                <h2 style="text-align:center;">the battle to be Chicago's most poop-filled beach 2015</h2>
+            </div>
 
-<hr>
-<div class="container">
-	<div class="row">
-		<div class="col-xs-offset-1 col-sm-offset-4">
-			@subDivs.socialMediaButtons()
-		</div>
-	</div>
-</div>
+            <div class="col-xs-12">
+                <h3 style="text-align: center"><span style="color:#3966aa">Current Drek Beach:</span> @scoreboard.getBeachRankings.get(0).getBeachName</h3>
+            </div>
+
+            <div class="col-xs-12 col-sm-6">
+                @graphics.leaderboard(scoreboard)
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fullLeaderboard">
+                    The List
+                </button>
+                @subDivs.fullLeaderboard(scoreboard)
+            </div>
+            <div class="col-xs-12 col-sm-6" style="padding-top: 30px;">
+
+                <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+                <div class="row">
+                    <a href="http://beachapp.cloudapp.net"
+                    title="The battle to be Chicago's most poop-filled beach 2015 is on! #drekbeach"
+                    class="tweet" target="_blank"><i class="fa fa-twitter-square fa-5x" style="color:saddlebrown;"></i></a>
+                </div>
+                <div class="row">
+                    <a href="http://beachapp.cloudapp.net"
+                    title="The battle to be Chicago's most poop-filled beach 2015 is on! #drekbeach"
+                    class="fbShare" target="_blank"><i class="fa fa-facebook-official fa-5x" style="color:saddlebrown;"></i></a>
+
+                </div>
+                @subDivs.socialMediaButtons()
+
+            </div>
+        </div>
+
+        @subDivs.stats2014()
+
+        <div id="pooScore" class="container">
+            <div class="row">
+                Poo Score = (1 x days under swim advisory) + (2 * days under swim ban)
+            </div>
+            <div class="row">
+                <div class="col-sm-6" style="text-align:center;">
+                    <h3 style="color:red;">Swim Ban</h3>
+                    <h5>The level of E-coli bacteria in the water exceeds 1000 mL<br>
+                        You are not allowed to go into the water</h5>
+
+                </div>
+                <div class="col-sm-6" style="text-align:center;">
+                    <h3 style="color:yellow;">Swim Advisory</h3>
+                    <h5>The level of E-coli bacteria in the water exceeds 231 mL<br>
+                        You may swim, but be advised that there are elevated levels of e-coli in the water.</h5>
+
+                </div>
+
+            </div>
 
 
-@subDivs.stats2014()
-
-<div id="pooScore" class="container">
-	<div class="row">
-		Poo Score = (1 x days under swim advisory) + (2 * days under swim ban)
-	</div>
-	<div class="row">
-		<div class="col-sm-6" style="text-align:center;">
-			<h3 style="color:red;">Swim Ban</h3>
-			<h5>The level of E-coli bacteria in the water exceeds 1000 mL<br>
-			You are not allowed to go into the water</h5>
-		
-		</div>
-		<div class="col-sm-6" style="text-align:center;">
-			<h3 style="color:yellow;">Swim Advisory</h3>
-			<h5>The level of E-coli bacteria in the water exceeds 231 mL<br>
-			You may swim, but be advised that there are elevated levels of e-coli in the water.</h5>
-		
-		</div>
-	
-	</div>
-	
-
-</div>
+        </div>
 
 
 
-}
+    }

@@ -12,10 +12,12 @@ import models.BeachSnapshot;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import models.Scoreboard;
 
 public class Apis extends Controller {
     
-    public static Result scoreboard() {
+    public static Result leaderboard() {
+
         // If I cared about speed here, I should be writing SQL to get the list in order.  But, I don't.
         List<Beach> beachList = Beach.find.all();
         beachList = BeachSorter.sortByShittiest(beachList);
@@ -65,4 +67,12 @@ public class Apis extends Controller {
     	
     	return ok(beachEcoliNode);
     }
+
+    public static Result scoreboard() {
+        Scoreboard s = Application.getScoreboard();
+        return ok(Json.toJson(s));
+
+    }
+
+
 }

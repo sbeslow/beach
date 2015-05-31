@@ -4,16 +4,13 @@ import models.Beach;
 
 import java.util.*;
 
-/**
- * Created by scottbeslow on 4/7/15.
- */
 public abstract class BeachSorter {
 
 
     public static List<Beach> sortByShittiest(List<Beach> beachList) {
         HashMap<Beach, Double> map = new HashMap<>();
         ValueComparator bvc = new ValueComparator(map);
-        TreeMap<Beach, Double> sorted_map = new TreeMap<Beach, Double>(bvc);
+        TreeMap<Beach, Double> sorted_map = new TreeMap<>(bvc);
 
         for (Beach beach : beachList) {
             map.put(beach, beach.getSeasonalStats().score());

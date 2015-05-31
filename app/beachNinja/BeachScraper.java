@@ -1,5 +1,6 @@
 package beachNinja;
 
+import controllers.Application;
 import models.Beach;
 import models.BeachSnapshot;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -91,5 +92,7 @@ public abstract class BeachScraper {
                 logger.error(ExceptionUtils.getStackTrace(e));
             }
         }
+
+        Application.updateScoreboard();
     }
 }

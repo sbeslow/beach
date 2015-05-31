@@ -18,11 +18,7 @@ public class Beaches extends Controller {
             beach = Beach.find.where().eq("urlCode", urlCode).findUnique();
         }
         catch (Exception e) {
-            if (!Application.productionMode) {
-                // beachSnapshot is null.
-                // if this is not production, set fake scrapes
-                // TODO: Set these from database
-            }
+
             return badRequest("ERRORCODE:2");
         }
         beach.getSeasonalStats(); // Calculate the seasonal stats here.
@@ -39,7 +35,7 @@ public class Beaches extends Controller {
     }
     
     public static List<Beach> beachList() {
-    	return Beach.find.all();
+    	return Beach.find.orderBy("name asc").findList();
     }
     
     public static int rank(String beachUrl) {

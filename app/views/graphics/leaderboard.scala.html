@@ -1,4 +1,4 @@
-@(beachList: List[Beach])
+@(scoreboard: Scoreboard)
 <div class="row">
 	<h3 style="text-decoration:underline;text-align:center;">The Leaderboard</h3>
 </div>
@@ -10,28 +10,12 @@
         <th>Poo Score</th>
     </thead>
     <tbody>
-        @for((aBeach, rank) <- beachList.zipWithIndex) {
+        @for(beachRanking <- scoreboard.topTen()) {
             <tr>
-                <td>@(rank + 1)</td>
-                <td>@aBeach.name</td>
-                <td>@aBeach.getSeasonalStats().score()</td>
+                <td>@beachRanking.getRank()</td>
+                <td>@beachRanking.getBeachName</td>
+                <td>@beachRanking.getPoopScore</td>
             </tr>
-
-            @if(rank == 10){
-                    </tbody>
-                </table>
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    Show Rest of List
-                </button>
-
-                <div class="collapse" id="collapseExample">
-                    <div class="well">
-
-                        <table class="table table-hover">
-                            <tbody>
-            }
         }
     </tbody>
 </table>
-</div>
-</div>
