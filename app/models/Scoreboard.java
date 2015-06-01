@@ -1,18 +1,21 @@
+// The real
+
 package models;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import scala.reflect.internal.TypeDebugging;
 import scoreboard.BeachRanking;
 
 import java.util.*;
 
 public class Scoreboard {
 
-    private long calculatedTime;
-    private List<BeachRanking> beachRankings;
+    // Note, this stuff is public on purpose.  Besides
 
-    public long getCalculatedTime() {
-        return calculatedTime;
-    }
+    public long calculatedTime;
+    public List<BeachRanking> beachRankings;
 
     public List<BeachRanking> getBeachRankings() {
         return beachRankings;
@@ -24,14 +27,14 @@ public class Scoreboard {
         Map<Double, List<Beach>> scoreMap = new HashMap<>(beaches.size());
 
         for (Beach beach : beaches) {
-            double pooScore = beach.pooScore();
+            double poopScore = beach.poopScore();
 
-            List<Beach> beachesWithThisScore = scoreMap.get(pooScore);
+            List<Beach> beachesWithThisScore = scoreMap.get(poopScore);
             if (null == beachesWithThisScore) {
                 beachesWithThisScore = new ArrayList<>(beaches.size());
             }
             beachesWithThisScore.add(beach);
-            scoreMap.put(pooScore, beachesWithThisScore);
+            scoreMap.put(poopScore, beachesWithThisScore);
         }
 
         List<Double> scores = new ArrayList<>(scoreMap.keySet());
@@ -45,7 +48,7 @@ public class Scoreboard {
         for (Double score : scores) {
             List<Beach> beachesWithScore = scoreMap.get(score);
             for (Beach beach : beachesWithScore) {
-                beachRankings.add(new BeachRanking(rank, beach.name, beach.urlCode, score));
+                beachRankings.add(new BeachRanking(beach, rank));
             }
             rank++;
         }
@@ -69,5 +72,10 @@ public class Scoreboard {
         }
 
         return retVal;
+    }
+
+    public String asOf() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
+        return formatter.print(calculatedTime);
     }
 }

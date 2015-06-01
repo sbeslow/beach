@@ -16,41 +16,20 @@
 		  font-size: 300%;
 		}
 	</style>
-	
-	<script>
-    
-	    $( document ).ready(function() {
-	    	
-	    	drawPercentRestrictGauge(@beach.getSeasonalStats().percentWithRestriction());
-	    });
-	    
-	    function drawPercentRestrictGauge(percent) {
-		    var config2 = liquidFillGaugeDefaultSettings();
-		    config2.circleColor = "#D4AB6A";
-		    config2.textColor = "#553300";
-		    config2.waveTextColor = "#805615";
-		    config2.waveColor = "#AA7D39";
-		    config2.circleThickness = 0.1;
-		    config2.circleFillGap = 0.2;
-		    config2.textVertPosition = 0.8;
-		    config2.waveAnimateTime = 2000;
-		    config2.waveHeight = 0.3;
-		    config2.waveCount = 1;
-		    loadLiquidFillGauge("fillgauge3", percent, config2);
-	    }
-    
-    </script>
 
 	<div class="container">
 		<div class="col-sm-4">
 			<h1 style="text-align:center;">@beach.name</h1>
 		</div>
 		<div class="col-sm-4">
+            <h1 style="text-align: center;">Current Conditions:</h1>
+        </div>
+        <div class="col-sm-4">
 			<div class="row">
 				<h4 style="text-align:center;">Current rank</h4>
 			</div>
 			<div class="row">
-				<h1 style="text-align:center"><span class="rankNumber" style="background: red;">@controllers.Beaches.rank(beach.urlCode)</span></h1>
+				<h1 style="text-align:center"><span class="rankNumber" style="background: #AA7D39;">@controllers.Beaches.rank(beach.urlCode)</span></h1>
 			</div>
 		</div>
 		<div class="col-sm-4">
@@ -63,12 +42,5 @@
     		
     	</div>
 	</div>
-    
-    <div class="container">
-    	@ecoliAtBeachOvertime(beach)
-    </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    <script src="@routes.Assets.at("javascripts/liquidGauge.js")"></script>
 
 }

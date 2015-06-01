@@ -1,7 +1,9 @@
 package scoreboard;
 
-import java.io.Serializable;
+import models.Beach;
+
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class BeachRanking {
 
@@ -11,6 +13,19 @@ public class BeachRanking {
     private String beachUrl;
 
     private double poopScore;
+
+    private String currentStatus;
+
+    public List<PoopDay> poopDays;
+
+    public BeachRanking(Beach beach, int rank) {
+        this.rank = rank;
+        this.beachName = beach.name;
+        this.poopScore = beach.poopScore();
+        this.beachUrl = beach.urlCode;
+        this.poopDays = beach.poopDays();
+        this.currentStatus = beach.currentStatus();
+    }
 
     public int getRank() {
         return rank;
@@ -24,15 +39,16 @@ public class BeachRanking {
         return beachUrl;
     }
 
-    public String getPoopScore() {
-        DecimalFormat df = new DecimalFormat("##.##");
-        return df.format(poopScore);
+    public double getPoopScore() {
+        return poopScore;
     }
 
-    public BeachRanking(int rank, String beachName, String beachUrl, double poopScore) {
-        this.rank = rank;
-        this.beachName = beachName;
-        this.poopScore = poopScore;
-        this.beachUrl = beachUrl;
+    public String getCurrentStatus() {
+        return currentStatus;
     }
+
+    public List<PoopDay> getPoopDays() {
+        return poopDays;
+    }
+
 }

@@ -2,6 +2,7 @@ package models;
 
 import beachNinja.SeasonalStats;
 import play.db.ebean.Model;
+import scoreboard.PoopDay;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -21,6 +22,7 @@ public class Beach extends Model {
     public Double longitude;
 
     @OneToMany(mappedBy = "beach", cascade = CascadeType.ALL)
+    @OrderBy("scrapeTime")
     public List<BeachSnapshot> snapshots;
 
     @Transient
@@ -46,12 +48,16 @@ public class Beach extends Model {
             Long.class, Beach.class
     );
 
-    public String currentStatus() throws Exception {
-        List<BeachSnapshot> snapshots = BeachSnapshot.find.where().eq("beach.id", id).orderBy("scrapeTime desc")
-                .findList();
-        BeachSnapshot mostRecentSnapshot = snapshots.get(0);
-        return mostRecentSnapshot.swimStatus;
+    public double poopScore() {
+        return getSeasonalStats().getPoopScore();
+    }
 
+    public List<PoopDay> poopDays() {
+        return getSeasonalStats().getPoopDays();
+    }
+
+    public String currentStatus() {
+        return snapshots.get(snapshots.size()-1).swimStatus;
     }
 
     public SeasonalStats getSeasonalStats() {
@@ -63,51 +69,13 @@ public class Beach extends Model {
     }
 
     public List<BeachSnapshot> sortDateAsc() {
-
+/* TODO: Trying to get rid of this method
         Collections.sort(this.snapshots, new Comparator<BeachSnapshot>() {
             public int compare(BeachSnapshot b1, BeachSnapshot b2) {
                 return b1.scrapeTime.compareTo(b2.scrapeTime);
             }
         });
-
+*/
         return this.snapshots;
-    }
-
-    public double pooScore() {
-
-        BeachSnapshot lastSnapshot = null;
-
-        int minsNoRestrict = 0;
-        int minsAdvisory = 0;
-        int minsSwimBan = 0;
-
-        for (BeachSnapshot thisSnapshot : sortDateAsc()) {
-
-            // If this is the first pass or if this is a new day.  Reset lastSnapshot and move to the next one
-            if ((lastSnapshot == null) || (!lastSnapshot.scrapeTime.toLocalDate().equals(thisSnapshot.scrapeTime.toLocalDate()))) {
-                lastSnapshot = thisSnapshot;
-                continue;
-            }
-
-            long msPassed = thisSnapshot.scrapeTime.getMillis() - lastSnapshot.scrapeTime.getMillis();
-            int minsPassed = (int) (msPassed / 60000);
-
-            switch (thisSnapshot.swimStatus) {
-                case BeachSnapshot.NO_RESTRICTIONS:
-                    minsNoRestrict += minsPassed;
-                    break;
-                case BeachSnapshot.SWIM_ADVISORY:
-                    minsAdvisory += minsPassed;
-                    break;
-                case BeachSnapshot.SWIM_BAN:
-                    minsSwimBan += minsPassed;
-                    break;
-            }
-        }
-
-        double pooScore = minsAdvisory / 480.0;
-        pooScore += ((2 * minsSwimBan) / 480.0);
-
-        return pooScore;
     }
 }

@@ -1,5 +1,5 @@
 package dataManagement;
-
+// TODO: Remove this object
 import models.Beach;
 
 import java.util.*;
@@ -13,7 +13,7 @@ public abstract class BeachSorter {
         TreeMap<Beach, Double> sorted_map = new TreeMap<>(bvc);
 
         for (Beach beach : beachList) {
-            map.put(beach, beach.getSeasonalStats().score());
+//            map.put(beach, beach.getSeasonalStats().score());
         }
 
         sorted_map.putAll(map);

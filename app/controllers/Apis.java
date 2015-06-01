@@ -25,7 +25,7 @@ public class Apis extends Controller {
         JsonNodeFactory factory = JsonNodeFactory.instance;
         ArrayNode beachesNode = factory.arrayNode();
         int rank = 1;
-        
+/*
         for (Beach beach : beachList) {
         	ObjectNode beachNode = Json.newObject();
         	beachNode.put("name", beach.name);
@@ -37,6 +37,7 @@ public class Apis extends Controller {
         	beachesNode.add(beachNode);
         	rank++;
         }
+*/
         return ok(beachesNode);
     }
     
