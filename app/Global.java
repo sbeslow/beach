@@ -25,8 +25,9 @@ public class Global extends GlobalSettings {
 
             // If test mode, make fake data.  Otherwise, start scraping cron job
             if (controllers.Application.config.isTestMode()) {
-                if (databaseReset)
-                	makeFakeData();
+                if (databaseReset) {
+                	//makeFakeData();
+                }
             }
             else {
                 startScrapingCron();

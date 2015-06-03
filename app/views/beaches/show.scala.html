@@ -1,4 +1,4 @@
-@(beach: Beach)
+@(beachRanking: BeachRanking)
 
 @main("") {
 	<style>
@@ -19,7 +19,7 @@
 
 	<div class="container">
 		<div class="col-sm-4">
-			<h1 style="text-align:center;">@beach.name</h1>
+			<h1 style="text-align:center;">@beachRanking.beachName</h1>
 		</div>
 		<div class="col-sm-4">
             <h1 style="text-align: center;">Current Conditions:</h1>
@@ -29,7 +29,7 @@
 				<h4 style="text-align:center;">Current rank</h4>
 			</div>
 			<div class="row">
-				<h1 style="text-align:center"><span class="rankNumber" style="background: #AA7D39;">@controllers.Beaches.rank(beach.urlCode)</span></h1>
+				<h1 style="text-align:center"><span class="rankNumber" style="background: #AA7D39;">@controllers.Beaches.rank(beachRanking.beachUrl)</span></h1>
 			</div>
 		</div>
 		<div class="col-sm-4">

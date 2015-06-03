@@ -12,9 +12,9 @@
     <tbody>
         @for(beachRanking <- scoreboard.topTen()) {
             <tr>
-                <td>@beachRanking.getRank()</td>
-                <td>@beachRanking.getBeachName</td>
-                <td>@beachRanking.getPoopScore</td>
+                <td>@beachRanking.rank</td>
+                <td>@beachRanking.beachName</td>
+                <td>@beachRanking.poopScore</td>
             </tr>
         }
     </tbody>

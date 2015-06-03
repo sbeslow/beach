@@ -1,6 +1,8 @@
 package models;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -34,6 +36,8 @@ public class BeachSnapshot extends Model {
     public Double forecastForToday;
     public Double mostRecentResult;
     public String resultCollected;
+    
+    public LocalDate resultDate;
 
     public BeachSnapshot(Beach beach) {
         this.beach = beach;

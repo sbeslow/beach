@@ -5,36 +5,29 @@ package models;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import scala.reflect.internal.TypeDebugging;
-import scoreboard.BeachRanking;
 
 import java.util.*;
 
 public class Scoreboard {
 
-    // Note, this stuff is public on purpose.  Besides
-
     public long calculatedTime;
     public List<BeachRanking> beachRankings;
-
-    public List<BeachRanking> getBeachRankings() {
-        return beachRankings;
-    }
 
     public Scoreboard() {
 
         List<Beach> beaches = Beach.find.all();
-        Map<Double, List<Beach>> scoreMap = new HashMap<>(beaches.size());
+        Map<Double, List<BeachRanking>> scoreMap = new HashMap<>(beaches.size());
 
         for (Beach beach : beaches) {
-            double poopScore = beach.poopScore();
+        	
+        	BeachRanking beachRanking = new BeachRanking(beach);
 
-            List<Beach> beachesWithThisScore = scoreMap.get(poopScore);
+            List<BeachRanking> beachesWithThisScore = scoreMap.get(beachRanking.poopScore);
             if (null == beachesWithThisScore) {
                 beachesWithThisScore = new ArrayList<>(beaches.size());
             }
-            beachesWithThisScore.add(beach);
-            scoreMap.put(poopScore, beachesWithThisScore);
+            beachesWithThisScore.add(beachRanking);
+            scoreMap.put(beachRanking.poopScore, beachesWithThisScore);
         }
 
         List<Double> scores = new ArrayList<>(scoreMap.keySet());
@@ -46,9 +39,10 @@ public class Scoreboard {
         beachRankings = new ArrayList<>(beaches.size());
 
         for (Double score : scores) {
-            List<Beach> beachesWithScore = scoreMap.get(score);
-            for (Beach beach : beachesWithScore) {
-                beachRankings.add(new BeachRanking(beach, rank));
+            List<BeachRanking> beachesWithScore = scoreMap.get(score);
+            for (BeachRanking beachRanking : beachesWithScore) {
+            	beachRanking.rank = rank;
+                beachRankings.add(beachRanking);
             }
             rank++;
         }
@@ -62,13 +56,13 @@ public class Scoreboard {
         int previousRank = 0;
 
         for (BeachRanking beachRanking : beachRankings) {
-            if ((beachRanking.getRank() > 10) ||
-                    ((counter >= 10) && (previousRank != beachRanking.getRank()))) {
+            if ((beachRanking.rank > 10) ||
+                    ((counter >= 10) && (previousRank != beachRanking.rank))) {
                 return retVal;
             }
             retVal.add(beachRanking);
             counter++;
-            previousRank = beachRanking.getRank();
+            previousRank = beachRanking.rank;
         }
 
         return retVal;

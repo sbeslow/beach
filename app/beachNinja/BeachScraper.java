@@ -3,12 +3,18 @@ package beachNinja;
 import controllers.Application;
 import models.Beach;
 import models.BeachSnapshot;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
+
 import play.Logger;
 
 import java.util.ArrayList;
@@ -18,9 +24,7 @@ public abstract class BeachScraper {
 
     private static final Logger.ALogger logger = Logger.of(BeachScraper.class);
 
-    private static void scrapeCpdPage(Beach beach) throws Exception {
-    	
-    	System.out.println("Scraping beach: " + beach.name);
+    public static void scrapeCpdPage(Beach beach) throws Exception {
 
         Document doc;
 
@@ -65,6 +69,7 @@ public abstract class BeachScraper {
         }
         try {
             beachSnapshot.mostRecentResult = Double.parseDouble(tableRows.get(3).childNode(0).toString().trim());
+            
         }
         catch (Exception e) {
             beachSnapshot.mostRecentResult = null;
@@ -72,10 +77,19 @@ public abstract class BeachScraper {
         }
 
         try {
-            beachSnapshot.resultCollected = tableRows.get(4).childNode(0).toString();
+            Node resultNode = tableRows.get(4).childNode(0);
+            
+            beachSnapshot.resultCollected = resultNode.toString();
+            
+            String dateStr = resultNode.childNode(0).childNode(0).toString();
+            dateStr = dateStr.replace("sample collected on ", "");
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd, yyyy");
+            beachSnapshot.resultDate = LocalDate.parse(dateStr, fmt);
+      
+            
         }
         catch (Exception e) {
-            logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
+            logger.error("for beach: " + beach.name + " on result node " + beachSnapshot.resultCollected + "\n" + ExceptionUtils.getStackTrace(e));
         }
         beachSnapshot.scrapeTime = new DateTime();
 

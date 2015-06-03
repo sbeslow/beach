@@ -1,9 +1,5 @@
 package controllers;
 
-import java.util.List;
-
-import models.Beach;
-import dataManagement.BeachSorter;
 import beachNinja.Config;
 import play.mvc.*;
 import models.Scoreboard;
@@ -21,7 +17,19 @@ public class Application extends Controller {
     }
 
     public static Result test() {
-        return TODO;
+    	
+    	/*
+    	Beach beach = Beach.find.where().eq("urlCode", "31st-Street-Beach").findUnique();
+    	
+    	try {
+    		BeachScraper.scrapeCpdPage(beach);
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    		return badRequest("Didn't work");
+    	}
+    	*/
+        return ok("Success!");
     }
 
     public static Scoreboard getScoreboard() {

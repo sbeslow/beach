@@ -2,8 +2,7 @@ package controllers;
 
 import dataManagement.BeachSorter;
 import models.Beach;
-import models.BeachSnapshot;
-import play.libs.Json;
+import models.BeachRanking;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -12,17 +11,14 @@ import java.util.List;
 public class Beaches extends Controller {
 
     public static Result show(String urlCode) {
+    	
+    	for (BeachRanking beachRanking : Application.getScoreboard().beachRankings) {
+    		if (beachRanking.beachUrl.equals(urlCode)) {
+    			return ok(views.html.beaches.show.render(beachRanking));
+    		}
+    	}
 
-        Beach beach;
-        try {
-            beach = Beach.find.where().eq("urlCode", urlCode).findUnique();
-        }
-        catch (Exception e) {
-
-            return badRequest("ERRORCODE:2");
-        }
-        beach.getSeasonalStats(); // Calculate the seasonal stats here.
-        return ok(views.html.beaches.show.render(beach));
+        return badRequest("Unable to find this beach");
     }
 
     public static List<Beach> scoreboard() {

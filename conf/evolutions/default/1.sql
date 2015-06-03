@@ -20,6 +20,7 @@ create table beach_snapshot (
   forecast_for_today        double,
   most_recent_result        double,
   result_collected          varchar(255),
+  result_date               date,
   constraint pk_beach_snapshot primary key (id))
 ;
 
