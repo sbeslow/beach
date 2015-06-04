@@ -1,14 +1,17 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import play.Logger;
 import scoreboard.EcoliMeasurement;
 
@@ -22,6 +25,7 @@ public class BeachRanking {
     public double poopScore;
     public String currentStatus;
     public int hoursRecorded;
+    public String lastUpdated;
 
     public List<EcoliMeasurement> ecoliMeasurements;
 
@@ -64,14 +68,25 @@ public class BeachRanking {
         		ecoliMeas = new EcoliMeasurement(thisSnapshot.scrapeTime.toLocalDate());
         	}
         	ecoliMeas.setPrediction(thisSnapshot.forecastForToday);
-        	ecoliMap.put(thisSnapshot.scrapeTime.toLocalDate(), ecoliMeas);
+        	if (thisSnapshot.swimStatus.equals(BeachSnapshot.SWIM_ADVISORY)) {
+        		if (ecoliMeas.getMaxSwimStatus().equals(BeachSnapshot.NO_RESTRICTIONS))
+        			ecoliMeas.setMaxSwimStatus(BeachSnapshot.SWIM_ADVISORY);
+        	}
+        	else if (thisSnapshot.swimStatus.equals(BeachSnapshot.SWIM_BAN)) {
+        		ecoliMeas.setMaxSwimStatus(BeachSnapshot.SWIM_BAN);
+        	}
+        	
+        	if (ecoliMeas.getDate().getYear() == 2015)
+        		ecoliMap.put(ecoliMeas.getDate(), ecoliMeas);
 
         	ecoliMeas = ecoliMap.get(thisSnapshot.resultDate);
         	if (ecoliMeas == null) {
         		ecoliMeas = new EcoliMeasurement(thisSnapshot.resultDate);
         	}
         	ecoliMeas.setReading(thisSnapshot.mostRecentResult);
-        	ecoliMap.put(thisSnapshot.scrapeTime.toLocalDate(), ecoliMeas);
+        	
+        	if (ecoliMeas.getDate().getYear() == 2015)
+        		ecoliMap.put(ecoliMeas.getDate(), ecoliMeas);
        	
 
             // If this is the first pass or if this is a new day.  Reset lastSnapshot and move to the next one
@@ -97,9 +112,30 @@ public class BeachRanking {
         }
         
         ecoliMeasurements = new ArrayList<>(ecoliMap.values());
-        poopScore = (minsAdvisory/60) + (2 * (minsSwimBan/60));
+        Collections.sort(ecoliMeasurements);
+
+        poopScore = (minsAdvisory/60.0) + (2.0 * (minsSwimBan/60.0));
         currentStatus = beach.snapshots.get(beach.snapshots.size() - 1).swimStatus;
+        
+        DateTime lastUpdatedDt = beach.snapshots.get(beach.snapshots.size() - 1).scrapeTime;
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd yyyy @ hh:mm aa");
+        lastUpdated = fmt.print(lastUpdatedDt);
+
         hoursRecorded = minsAdvisory + minsSwimBan + minsNoRestrict;
     	
+    }
+    
+    public String currentStatusColor() {
+    	if (currentStatus.equals(BeachSnapshot.NO_RESTRICTIONS))
+    		return "green";
+    	else if (currentStatus.equals(BeachSnapshot.SWIM_ADVISORY))
+    		return "orange";
+    	else if (currentStatus.equals(BeachSnapshot.SWIM_BAN))
+    		return "red";
+    	return "gray";
+    }
+    
+    public String printPoopScore() {
+    	return String.format("%.2f", poopScore);
     }
 }

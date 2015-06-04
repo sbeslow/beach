@@ -1,4 +1,3 @@
-// The real
 
 package models;
 

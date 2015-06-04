@@ -1,0 +1,94 @@
+@(beachRanking: BeachRanking)
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="beachGraph" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+<script>
+
+	var theDates = [];
+	var predicted = [];
+	var actualReading = [];
+	var swimStatus = {};
+
+</script>
+
+@for(measurement <- beachRanking.ecoliMeasurements){
+	<script>
+		theDates.push('@measurement.printDate()');
+		predicted.push(@measurement.getPrediction());
+		actualReading.push(@measurement.getReading());
+		swimStatus['@measurement.printDate()'] = '@measurement.getMaxSwimStatus';
+		
+	</script>
+}
+
+<script>
+
+$(function () {
+    $('#beachGraph').highcharts({
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: 'Predicted vs. Actual E-Coli Levels'
+        },
+        xAxis: {
+            categories: theDates,
+            labels: {
+                formatter: function () {
+                    if ('Swim Ban' === swimStatus[this.value]) {
+                        return '<span style="fill: red;">' + this.value + '</span>';
+                    }
+                    else if ('Swim Advisory' === swimStatus[this.value]) {
+                    	return '<span style="fill: orange;">' + this.value + '</span>';
+                    }
+                    else {
+                        return this.value;
+                    }
+                }
+            }
+        },
+        yAxis: {
+            title: {
+                text: 'E-Coli Levels'
+            },
+        },
+        tooltip: {
+            crosshairs: true,
+            shared: true
+        },
+        credits: {
+            enabled: false
+        },
+        exporting: {
+            enabled: false
+   		},
+        plotOptions: {
+            spline: {
+                marker: {
+                    radius: 4,
+                    lineColor: '#666666',
+                    lineWidth: 1
+                }
+            }
+        },
+        series: [{
+            name: 'Predicted',
+            marker: {
+                symbol: 'square'
+            },
+            data: predicted
+
+        }, {
+            name: 'Measured',
+            marker: {
+                symbol: 'diamond'
+            },
+            data: actualReading
+        }]
+    });
+});
+
+</script>

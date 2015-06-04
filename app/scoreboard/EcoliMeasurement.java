@@ -1,19 +1,28 @@
 package scoreboard;
 
-import org.joda.time.LocalDate;
+import models.BeachSnapshot;
 
-public class EcoliMeasurement {
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+public class EcoliMeasurement implements Comparable<EcoliMeasurement> {
 	
 	private LocalDate date;
 	
 	private Double reading;
 	private Double prediction;
 	
+	private String maxSwimStatus;
+
 	public EcoliMeasurement(LocalDate date) {
 		this.date = date;
+		this.maxSwimStatus = BeachSnapshot.NO_RESTRICTIONS;
+		reading = 0.0;
+		prediction = 0.0;
 	}
 	
-	public LocalDate date() {
+	public LocalDate getDate() {
 		return date;
 	}
 
@@ -25,11 +34,36 @@ public class EcoliMeasurement {
 	}
 
 	public void setReading(Double reading) {
-		this.reading = reading;
+		if (reading != null)
+			this.reading = reading;
 	}
 
 	public void setPrediction(Double prediction) {
-		this.prediction = prediction;
+		if (prediction != null)
+			this.prediction = prediction;
+	}
+	
+	public String printDate() {
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd");
+        return fmt.print(date);
+	}
+	
+	public void setMaxSwimStatus(String maxSwimStatus) {
+		this.maxSwimStatus = maxSwimStatus;
+	}
+	
+	public String getMaxSwimStatus() {
+		return maxSwimStatus;
+	}
+
+	@Override
+	public int compareTo(EcoliMeasurement o) {
+		if (this.date.isBefore(o.getDate())) {
+			return -1;
+		}
+		else if (this.date.isAfter(o.getDate()))
+			return 1;
+		return 0;
 	}
 	
 }
