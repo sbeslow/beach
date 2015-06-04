@@ -1,7 +1,5 @@
 package models;
 
-import models.Beach;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +7,14 @@ import java.util.Map;
 
 import org.joda.time.LocalDate;
 
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import play.Logger;
 import scoreboard.EcoliMeasurement;
 
 public class BeachRanking {
+
+    private static final Logger.ALogger logger = Logger.of(BeachRanking.class);
 
     public Integer rank;
     public String beachName;
@@ -40,6 +43,21 @@ public class BeachRanking {
         BeachSnapshot lastSnapshot = null;
 
         for (BeachSnapshot thisSnapshot : beach.snapshots) {
+
+            if (thisSnapshot.resultDate == null) {
+                try {
+                    String dateStr = thisSnapshot.resultCollected.replace("sample collected on ", "");
+                    dateStr = dateStr.replace("<small><em>", "");
+                    dateStr = dateStr.replace("</em></small>", "");
+                    DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd, yyyy");
+                    thisSnapshot.resultDate = LocalDate.parse(dateStr, fmt);
+                    thisSnapshot.update();
+                }
+                catch (Exception e) {
+                    logger.error("Unable to fill result date for snapshot: " + thisSnapshot.id);
+                    continue;
+                }
+            }
 
         	EcoliMeasurement ecoliMeas = ecoliMap.get(thisSnapshot.scrapeTime.toLocalDate());
         	if (ecoliMeas == null) {

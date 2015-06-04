@@ -1,5 +1,6 @@
 package controllers;
 
+import beachNinja.BeachScraper;
 import beachNinja.Config;
 import play.mvc.*;
 import models.Scoreboard;
@@ -17,7 +18,9 @@ public class Application extends Controller {
     }
 
     public static Result test() {
-    	
+
+        //BeachScraper.scrapeAllCpdPages();
+
     	/*
     	Beach beach = Beach.find.where().eq("urlCode", "31st-Street-Beach").findUnique();
     	

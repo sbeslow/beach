@@ -55,7 +55,8 @@ public abstract class BeachScraper {
             }
         }
         catch (Exception e) {
-            logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
+            if (beach.id != 131) // Humboldt
+                logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
             beachSnapshot.swimStatus = "ERROR";
         }
 
@@ -65,15 +66,20 @@ public abstract class BeachScraper {
         }
         catch (Exception e) {
             beachSnapshot.forecastForToday = null;
-            logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
+            if (beach.id != 131) // Humboldt
+                logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
         }
+
+        String mostRecResultStr = tableRows.get(3).childNode(0).toString();
+        mostRecResultStr = mostRecResultStr.replace(" CCE", "");
         try {
-            beachSnapshot.mostRecentResult = Double.parseDouble(tableRows.get(3).childNode(0).toString().trim());
+            beachSnapshot.mostRecentResult = Double.parseDouble(mostRecResultStr.trim());
             
         }
         catch (Exception e) {
             beachSnapshot.mostRecentResult = null;
-            logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
+            if (beach.id != 131) // Humboldt
+                logger.error("for beach: " + beach.name + "\n" + ExceptionUtils.getStackTrace(e));
         }
 
         try {
@@ -89,7 +95,8 @@ public abstract class BeachScraper {
             
         }
         catch (Exception e) {
-            logger.error("for beach: " + beach.name + " on result node " + beachSnapshot.resultCollected + "\n" + ExceptionUtils.getStackTrace(e));
+            if (beach.id != 131) // Humboldt
+                logger.error("for beach: " + beach.name + " on result node " + beachSnapshot.resultCollected + "\n" + ExceptionUtils.getStackTrace(e));
         }
         beachSnapshot.scrapeTime = new DateTime();
 

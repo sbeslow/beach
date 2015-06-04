@@ -24,13 +24,6 @@ create table beach_snapshot (
   constraint pk_beach_snapshot primary key (id))
 ;
 
-create table significant_error (
-  id                        bigint auto_increment not null,
-  date_time                 datetime,
-  message                   varchar(255),
-  constraint pk_significant_error primary key (id))
-;
-
 alter table beach_snapshot add constraint fk_beach_snapshot_beach_1 foreign key (beach_id) references beach (id) on delete restrict on update restrict;
 create index ix_beach_snapshot_beach_1 on beach_snapshot (beach_id);
 
@@ -43,8 +36,6 @@ SET FOREIGN_KEY_CHECKS=0;
 drop table beach;
 
 drop table beach_snapshot;
-
-drop table significant_error;
 
 SET FOREIGN_KEY_CHECKS=1;
 
