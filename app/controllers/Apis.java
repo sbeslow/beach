@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import dataManagement.BeachSorter;
 import models.Beach;
+import models.BeachRanking;
 import models.BeachSnapshot;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -75,5 +76,16 @@ public class Apis extends Controller {
 
     }
 
+    public static Result beachInfo(String beachUrl) {
+
+        Scoreboard s = Application.getScoreboard();
+        for (BeachRanking beachRanking : s.beachRankings) {
+            if (beachRanking.beachUrl.equals(beachUrl)) {
+                return ok(Json.toJson(beachRanking));
+            }
+        }
+        return badRequest("Can't find this beach");
+
+    }
 
 }
