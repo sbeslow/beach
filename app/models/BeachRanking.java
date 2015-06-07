@@ -1,7 +1,6 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -160,11 +159,10 @@ public class BeachRanking {
     }
 
     public String rankColor() {
-        if (rank < 10)
+        if (rank < 8)
             return "red";
-        else if (rank <19) {
+        else if (rank <19)
             return "orange";
-        }
         else
             return "green";
     }
