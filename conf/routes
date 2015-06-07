@@ -8,7 +8,8 @@ GET        /beach/:urlCode             controllers.Beaches.show(urlCode: String)
 
 GET        /api/leaderboard            controllers.Apis.leaderboard()
 GET        /api/ecoli/:beachUrl        controllers.Apis.ecoli(beachUrl: String)
-GET         /api/scoreboard             controllers.Apis.scoreboard()
+GET        /api/scoreboard             controllers.Apis.scoreboard()
+GET         /contribute                 controllers.Application.contribute()
 
 GET        /test                       controllers.Application.test()
 

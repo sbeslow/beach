@@ -11,5 +11,6 @@ libraryDependencies ++= Seq(
   javaEbean,
   cache,
   "org.jsoup" % "jsoup" % "1.8.1",
-  "mysql" % "mysql-connector-java" % "5.1.35"
+  "mysql" % "mysql-connector-java" % "5.1.35",
+  "com.google.guava" % "guava" % "18.0"
 )

@@ -31,6 +31,13 @@ public abstract class BeachScraper {
         String cpdUrl = "http://www.cpdbeaches.com/beaches/" + beach.urlCode;
         doc = Jsoup.connect(cpdUrl).get();
 
+        BeachSnapshot beachSnapshot = parseHtml(doc, beach);
+
+        beachSnapshot.save();
+    }
+
+    private static BeachSnapshot parseHtml(Document doc, Beach beach) {
+
         BeachSnapshot beachSnapshot = new BeachSnapshot(beach);
 
         Element bSnap = doc.getElementsByClass("beach-snapshot").first();
@@ -74,7 +81,7 @@ public abstract class BeachScraper {
         mostRecResultStr = mostRecResultStr.replace(" CCE", "");
         try {
             beachSnapshot.mostRecentResult = Double.parseDouble(mostRecResultStr.trim());
-            
+
         }
         catch (Exception e) {
             beachSnapshot.mostRecentResult = null;
@@ -84,15 +91,15 @@ public abstract class BeachScraper {
 
         try {
             Node resultNode = tableRows.get(4).childNode(0);
-            
+
             beachSnapshot.resultCollected = resultNode.toString();
-            
+
             String dateStr = resultNode.childNode(0).childNode(0).toString();
             dateStr = dateStr.replace("sample collected on ", "");
             DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd, yyyy");
             beachSnapshot.resultDate = LocalDate.parse(dateStr, fmt);
-      
-            
+
+
         }
         catch (Exception e) {
             if (beach.id != 131) // Humboldt
@@ -100,7 +107,8 @@ public abstract class BeachScraper {
         }
         beachSnapshot.scrapeTime = new DateTime();
 
-        beachSnapshot.save();
+        return beachSnapshot;
+
     }
 
     public static void scrapeAllCpdPages() {
@@ -115,5 +123,10 @@ public abstract class BeachScraper {
         }
 
         Application.updateScoreboard();
+    }
+
+    public static BeachSnapshot scrapeCpdHtmlString(String html, Beach beach) {
+        Document doc = Jsoup.parse(html);
+        return parseHtml(doc, beach);
     }
 }

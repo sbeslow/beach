@@ -11,10 +11,13 @@
     </thead>
     <tbody>
         @for(beachRanking <- scoreboard.topTen()) {
-            <tr>
+
+            <tr onclick="document.location = '/beach/@beachRanking.beachUrl';">
+
                 <td>@beachRanking.rank</td>
                 <td>@beachRanking.beachName</td>
                 <td>@beachRanking.printPoopScore</td>
+
             </tr>
         }
     </tbody>

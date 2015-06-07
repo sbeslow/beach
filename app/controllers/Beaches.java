@@ -11,6 +11,10 @@ import java.util.List;
 public class Beaches extends Controller {
 
     public static Result show(String urlCode) {
+
+        if (urlCode.equals("Humboldt-Beach")) {
+            return ok(views.html.beaches.humboldt.render());
+        }
     	
     	for (BeachRanking beachRanking : Application.getScoreboard().beachRankings) {
     		if (beachRanking.beachUrl.equals(urlCode)) {

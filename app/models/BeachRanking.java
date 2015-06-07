@@ -22,6 +22,9 @@ public class BeachRanking {
     public Integer rank;
     public String beachName;
     public String beachUrl;
+    public Double lat;
+    public Double lon;
+
     public double poopScore;
     public String currentStatus;
     public int hoursRecorded;
@@ -32,12 +35,29 @@ public class BeachRanking {
     public BeachRanking(Beach beach) {
         this.beachName = beach.name;
         this.beachUrl = beach.urlCode;
+        this.lat = beach.latitude;
+        this.lon = beach.longitude;
         
         buildPoopReadings(beach);
     }
     
     private void buildPoopReadings(Beach beach) {
         poopScore = 0;
+
+        // Humboldt Park Beach is closed for the summer
+        if (beach.urlCode.equals("Humboldt-Beach")) {
+            ecoliMeasurements = null;
+
+            poopScore = 0;
+            currentStatus = "Closed";
+
+            DateTime lastUpdatedDt = new DateTime();
+            DateTimeFormatter fmt = DateTimeFormat.forPattern("MMM dd yyyy @ hh:mm aa");
+            lastUpdated = fmt.print(lastUpdatedDt);
+
+            hoursRecorded = 0;
+            return;
+        }
         
         int minsNoRestrict = 0;
         int minsAdvisory = 0;
@@ -137,5 +157,15 @@ public class BeachRanking {
     
     public String printPoopScore() {
     	return String.format("%.2f", poopScore);
+    }
+
+    public String rankColor() {
+        if (rank < 10)
+            return "red";
+        else if (rank <19) {
+            return "orange";
+        }
+        else
+            return "green";
     }
 }

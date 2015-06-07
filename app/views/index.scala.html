@@ -11,41 +11,37 @@
             <div class="col-xs-12">
                 <h3 style="text-align: center"><span style="color:#3966aa">Current Drek Beach:</span> @scoreboard.beachRankings.get(0).beachName</h3>
             </div>
-
-            <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-                @graphics.leaderboard(scoreboard)
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#fullLeaderboard">
-                    The List
-                </button>
-                @subDivs.fullLeaderboard(scoreboard)
-            </div>
+        </div>
+        <div class="container" id="statsBoard">
+            @statsBoard(scoreboard)
         </div>
 
-        @subDivs.stats2014()
+        @stats2014()
 
-        <div id="pooScore" class="container">
+        <div class="container" id="whatsThis" style="text-align: center;margin-bottom: 7px;">
+
             <div class="row">
-                Poo Score = (1 x days under swim advisory) + (2 * days under swim ban)
+                <h2>The Poo Score</h2>
+                <h4>is an arbitrary number that counts the number of swim advisories and swim bans,
+                giving double the weight for the latter</h4>
             </div>
+            <hr>
             <div class="row">
-                <div class="col-sm-6" style="text-align:center;">
-                    <h3 style="color:red;">Swim Ban</h3>
-                    <h5>The level of E-coli bacteria in the water exceeds 1000 mL<br>
-                        You are not allowed to go into the water</h5>
-
+                <div class="col-sm-9">
+                    <h2>Ecoli</h2>
+                    <p>E-coli is a bacteria found in the intestines of animals.  The city monitors the amount
+                    of E-coli in the water as an indicator for the amount of fecal contamination.
+                    The US E.P.A recommends notifying the public when E. coli bacteria levels are above 235
+                    CCE (Enterococci Calibrator Cell Equivalents per 100 milliliters of water)
+                    federal water quality Beach Action Value (BAV), which is 235.  If it exceeds this level,
+                    there will be a <strong>Swim Advisory</strong>.  When the level exceeds 1000 CE, the
+                    Park District issues a <strong>Swim Ban</strong>.</p>
                 </div>
-                <div class="col-sm-6" style="text-align:center;">
-                    <h3 style="color:yellow;">Swim Advisory</h3>
-                    <h5>The level of E-coli bacteria in the water exceeds 231 mL<br>
-                        You may swim, but be advised that there are elevated levels of e-coli in the water.</h5>
-
+                <div class="col-xs-7 col-sm-3">
+                    <a title="By Credit: Rocky Mountain Laboratories, NIAID, NIH [Public domain], via Wikimedia Commons" href="http://commons.wikimedia.org/wiki/File%3AEscherichiaColi_NIAID.jpg"><img width="512" alt="EscherichiaColi NIAID" src="//upload.wikimedia.org/wikipedia/commons/thumb/3/32/EscherichiaColi_NIAID.jpg/512px-EscherichiaColi_NIAID.jpg" class="img-responsive"/></a>
                 </div>
-
             </div>
 
 
         </div>
-
-
-
     }

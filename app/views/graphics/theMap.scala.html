@@ -1,0 +1,41 @@
+@(scoreboard: Scoreboard)
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+
+<style>
+    #map { height: 480px; }
+</style>
+
+<div id="map"></div>
+
+
+<script>
+
+    var map = L.map('map').setView([41.89, -87.652], 10);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: '@controllers.Application.mapboxProjectId()',
+        accessToken: '@controllers.Application.mapboxAccessCode()'
+        }).addTo(map);
+
+    var rank=1;
+    @for(beachRanking <- scoreboard.beachRankings){
+
+        @if(beachRanking.lat != null) {
+
+            var marker = L.marker([@beachRanking.lat, @beachRanking.lon]).addTo(map);
+            marker.valueOf()._icon.style.backgroundColor = '@beachRanking.rankColor()';
+            marker.bindPopup("<b>@beachRanking.beachName</b><br>Rank: @beachRanking.rank");
+        }
+    }
+
+
+</script>
+
+
+
+
+
+

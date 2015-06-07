@@ -1,7 +1,7 @@
 package controllers;
 
-import beachNinja.BeachScraper;
 import beachNinja.Config;
+import play.Play;
 import play.mvc.*;
 import models.Scoreboard;
 import views.html.*;
@@ -19,20 +19,13 @@ public class Application extends Controller {
 
     public static Result test() {
 
-        //BeachScraper.scrapeAllCpdPages();
+        //OneOffScripts.fillEmptyForecasts();
 
-    	/*
-    	Beach beach = Beach.find.where().eq("urlCode", "31st-Street-Beach").findUnique();
-    	
-    	try {
-    		BeachScraper.scrapeCpdPage(beach);
-    	}
-    	catch (Exception e) {
-    		e.printStackTrace();
-    		return badRequest("Didn't work");
-    	}
-    	*/
         return ok("Success!");
+    }
+
+    public static Result contribute() {
+        return ok(views.html.contribute.render());
     }
 
     public static Scoreboard getScoreboard() {
@@ -44,4 +37,12 @@ public class Application extends Controller {
     public static void updateScoreboard() {
         scoreboard = new Scoreboard();
     }
+
+    public static String mapboxAccessCode() {
+        return Play.application().configuration().getString("mapboxCode");
+    }
+    public static String mapboxProjectId() {
+        return Play.application().configuration().getString("mapBoxProjectId");
+    }
+
 }
