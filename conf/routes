@@ -10,7 +10,7 @@ GET        /api/leaderboard            controllers.Apis.leaderboard()
 GET        /api/ecoli/:beachUrl        controllers.Apis.ecoli(beachUrl: String)
 GET        /api/scoreboard             controllers.Apis.scoreboard()
 GET        /api/beach/:beachUrl         controllers.Apis.beachInfo(beachUrl: String)
-GET        /contribute                 controllers.Application.contribute()
+GET        /getInvolved                controllers.Application.involved()
 
 GET        /test                       controllers.Application.test()
 

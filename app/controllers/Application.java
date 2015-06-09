@@ -24,8 +24,8 @@ public class Application extends Controller {
         return ok("Success!");
     }
 
-    public static Result contribute() {
-        return ok(views.html.contribute.render());
+    public static Result involved() {
+        return ok(views.html.getInvolved.render());
     }
 
     public static Scoreboard getScoreboard() {
