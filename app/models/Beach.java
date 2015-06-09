@@ -1,6 +1,5 @@
 package models;
 
-import beachNinja.SeasonalStats;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -22,9 +21,6 @@ public class Beach extends Model {
     @OrderBy("scrapeTime")
     public List<BeachSnapshot> snapshots;
 
-    @Transient
-    public SeasonalStats seasonalStats = null;
-
     public Beach(String[] beachFields) throws Exception {
 
         this.name = beachFields[0];
@@ -44,24 +40,4 @@ public class Beach extends Model {
     public static Finder<Long,Beach> find = new Finder<>(
             Long.class, Beach.class
     );
-
-    public SeasonalStats getSeasonalStats() {
-        if (null == seasonalStats) {
-            seasonalStats = new SeasonalStats(this);
-        }
-        return seasonalStats;
-    }
-
-    /* TODO: Trying to get rid of this method
-    public List<BeachSnapshot> sortDateAsc() {
-
-        Collections.sort(this.snapshots, new Comparator<BeachSnapshot>() {
-            public int compare(BeachSnapshot b1, BeachSnapshot b2) {
-                return b1.scrapeTime.compareTo(b2.scrapeTime);
-            }
-        });
-
-        return this.snapshots;
-    }
-    */
 }
