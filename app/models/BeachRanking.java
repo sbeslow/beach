@@ -159,9 +159,9 @@ public class BeachRanking {
     }
 
     public String rankColor() {
-        if (rank < 8)
+        if (rank <= 5)
             return "red";
-        else if (rank <19)
+        else if (rank <= 10)
             return "orange";
         else
             return "green";

@@ -25,11 +25,20 @@
 <div id="mapDiv">
     <div class="container">
         <div class="col-xs-12 col-sm-5 col-sm-offset-3">
-        @graphics.theMap(scoreboard)
+        	@graphics.theMap(scoreboard)
         </div>
 
         <div class="col-xs-12 col-sm-2 col-sm-offset-1">
-            <button type="button" class="btn btn-lg" id="showScoreboardBtn" style="background-color:#AA7D39; color:white; margin-bottom:10px; margin-top:10px;">
+        	<div id="mapKey" style="margin-top:40px">
+        		<table class="table" style="text-align:center;">
+        			<th style="text-align:center">Key</th>
+        			<tr><td style="color:red">Top 5</td></tr>
+        			<tr><td style="color:orange">Next 5</td></tr>
+        			<tr><td style="color:green">The Rest</td></tr>        			
+        		</table>
+        	</div>
+        
+            <button type="button" class="btn" id="showScoreboardBtn" style="background-color:#AA7D39; color:white; margin-bottom:10px; margin-top:10px;">
                 Show Scoreboard
             </button>
         </div>
