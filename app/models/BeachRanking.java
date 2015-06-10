@@ -95,8 +95,8 @@ public class BeachRanking {
         		ecoliMeas.setMaxSwimStatus(BeachSnapshot.SWIM_BAN);
         	}
         	
-        	if (ecoliMeas.getDate().getYear() == 2015)
-        		ecoliMap.put(ecoliMeas.getDate(), ecoliMeas);
+        	if (ecoliMeas.measDate().getYear() == 2015)
+        		ecoliMap.put(ecoliMeas.measDate(), ecoliMeas);
 
         	ecoliMeas = ecoliMap.get(thisSnapshot.resultDate);
         	if (ecoliMeas == null) {
@@ -104,8 +104,8 @@ public class BeachRanking {
         	}
         	ecoliMeas.setReading(thisSnapshot.mostRecentResult);
         	
-        	if (ecoliMeas.getDate().getYear() == 2015)
-        		ecoliMap.put(ecoliMeas.getDate(), ecoliMeas);
+        	if (ecoliMeas.measDate().getYear() == 2015)
+        		ecoliMap.put(ecoliMeas.measDate(), ecoliMeas);
        	
 
             // If this is the first pass or if this is a new day.  Reset lastSnapshot and move to the next one
@@ -145,12 +145,14 @@ public class BeachRanking {
     }
     
     public String currentStatusColor() {
-    	if (currentStatus.equals(BeachSnapshot.NO_RESTRICTIONS))
-    		return "green";
-    	else if (currentStatus.equals(BeachSnapshot.SWIM_ADVISORY))
-    		return "orange";
-    	else if (currentStatus.equals(BeachSnapshot.SWIM_BAN))
-    		return "red";
+        switch (currentStatus) {
+            case BeachSnapshot.NO_RESTRICTIONS:
+                return "green";
+            case BeachSnapshot.SWIM_ADVISORY:
+                return "orange";
+            case BeachSnapshot.SWIM_BAN:
+                return "red";
+        }
     	return "gray";
     }
     

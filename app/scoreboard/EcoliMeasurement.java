@@ -2,13 +2,17 @@ package scoreboard;
 
 import models.BeachSnapshot;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import play.Logger;
 
 public class EcoliMeasurement implements Comparable<EcoliMeasurement> {
+
+    private static final Logger.ALogger logger = Logger.of(EcoliMeasurement.class);
 	
-	private LocalDate date;
+	private String date;
 	
 	private Double reading;
 	private Double prediction;
@@ -16,14 +20,27 @@ public class EcoliMeasurement implements Comparable<EcoliMeasurement> {
 	private String maxSwimStatus;
 
 	public EcoliMeasurement(LocalDate date) {
-		this.date = date;
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd/yyyy");
+        this.date = fmt.print(date);
+
 		this.maxSwimStatus = BeachSnapshot.NO_RESTRICTIONS;
 		reading = 0.0;
 		prediction = 0.0;
 	}
 	
-	public LocalDate getDate() {
-		return date;
+	public LocalDate measDate() {
+        try {
+            String[] dateSep = date.split("/");
+            return new LocalDate(
+                Integer.parseInt(dateSep[2]),
+                Integer.parseInt(dateSep[0]),
+                Integer.parseInt(dateSep[1])
+            );
+        }
+        catch (Exception e) {
+            logger.error(ExceptionUtils.getStackTrace(e));
+            return null;
+        }
 	}
 
 	public Double getReading() {
@@ -44,9 +61,12 @@ public class EcoliMeasurement implements Comparable<EcoliMeasurement> {
 	}
 	
 	public String printDate() {
-        DateTimeFormatter fmt = DateTimeFormat.forPattern("MM/dd");
-        return fmt.print(date);
+        return date;
 	}
+
+    public String getDate() {
+        return date;
+    }
 	
 	public void setMaxSwimStatus(String maxSwimStatus) {
 		this.maxSwimStatus = maxSwimStatus;
@@ -56,12 +76,13 @@ public class EcoliMeasurement implements Comparable<EcoliMeasurement> {
 		return maxSwimStatus;
 	}
 
-	@Override
+	@SuppressWarnings("NullableProblems")
+    @Override
 	public int compareTo(EcoliMeasurement o) {
-		if (this.date.isBefore(o.getDate())) {
+		if (this.measDate().isBefore(o.measDate())) {
 			return -1;
 		}
-		else if (this.date.isAfter(o.getDate()))
+		else if (this.measDate().isAfter(o.measDate()))
 			return 1;
 		return 0;
 	}
