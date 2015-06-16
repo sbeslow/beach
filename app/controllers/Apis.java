@@ -1,47 +1,25 @@
 package controllers;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
+
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import dataManagement.BeachSorter;
-import models.Beach;
 import models.BeachRanking;
 import models.BeachSnapshot;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import scoreboard.EcoliMeasurement;
 import models.Scoreboard;
 
 public class Apis extends Controller {
-    
-    public static Result leaderboard() {
-
-        // If I cared about speed here, I should be writing SQL to get the list in order.  But, I don't.
-        List<Beach> beachList = Beach.find.all();
-        beachList = BeachSorter.sortByShittiest(beachList);
-        
-        JsonNodeFactory factory = JsonNodeFactory.instance;
-        ArrayNode beachesNode = factory.arrayNode();
-        int rank = 1;
-/*
-        for (Beach beach : beachList) {
-        	ObjectNode beachNode = Json.newObject();
-        	beachNode.put("name", beach.name);
-        	beachNode.put("urlCode", beach.urlCode);
-        	beachNode.put("rank", rank);
-        	beachNode.put("noRestrict", beach.getSeasonalStats().percentNoRestrict());
-        	beachNode.put("advisory", beach.getSeasonalStats().percentAdvisory());
-        	beachNode.put("ban", beach.getSeasonalStats().percentBan());
-        	beachesNode.add(beachNode);
-        	rank++;
-        }
-*/
-        return ok(beachesNode);
-    }
-    
+       
     public static Result ecoli(String beachUrl) {
     	
     	List<BeachSnapshot> snapshots = BeachSnapshot.find.where().eq("beach.urlCode", beachUrl).orderBy("scrapeTime asc") .findList();
@@ -87,5 +65,11 @@ public class Apis extends Controller {
         return badRequest("Can't find this beach");
 
     }
+    
+    public static Result fullSummaries() {
+    	
+    	return ok(views.html.apis.completeEcoliCsv.render(Application.getScoreboard()));
+    }
+
 
 }

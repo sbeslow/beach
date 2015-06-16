@@ -45,7 +45,7 @@ public class BeachRanking {
 
         // Humboldt Park Beach is closed for the summer
         if (beach.urlCode.equals("Humboldt-Beach")) {
-            ecoliMeasurements = null;
+            ecoliMeasurements = new ArrayList<>(1);
 
             poopScore = 0;
             currentStatus = "Closed";

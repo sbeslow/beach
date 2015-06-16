@@ -76,7 +76,6 @@ public class EcoliMeasurement implements Comparable<EcoliMeasurement> {
 		return maxSwimStatus;
 	}
 
-	@SuppressWarnings("NullableProblems")
     @Override
 	public int compareTo(EcoliMeasurement o) {
 		if (this.measDate().isBefore(o.measDate())) {
