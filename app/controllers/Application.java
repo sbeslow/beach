@@ -1,15 +1,8 @@
 package controllers;
 
-import java.io.File;
-import java.io.FileWriter;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
-
 import beachNinja.Config;
 import play.Play;
 import play.mvc.*;
-import scoreboard.EcoliMeasurement;
-import models.BeachRanking;
 import models.Scoreboard;
 import views.html.*;
 
@@ -28,7 +21,7 @@ public class Application extends Controller {
 
         //OneOffScripts.fillEmptyForecasts();
 
-        return ok("Success!");
+        return ok("This doesn't do anything");
     }
 
     public static Result involved() {
