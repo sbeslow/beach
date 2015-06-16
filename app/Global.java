@@ -1,9 +1,6 @@
 
 import dataManagement.CronMan;
 import models.Beach;
-import models.BeachSnapshot;
-
-
 import org.joda.time.DateTime;
 
 import play.*;
@@ -11,7 +8,6 @@ import play.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.util.List;
-import java.util.Random;
 
 public class Global extends GlobalSettings {
 
@@ -40,31 +36,12 @@ public class Global extends GlobalSettings {
         }
     }
 
-    private void makeFakeData() {
-        List<Beach> beachList = Beach.find.all();
-        
-        Random rand = new Random();
-        for (Beach beach : beachList) {
-            DateTime timeMarker = new DateTime();
-            double forecast = Double.parseDouble(Integer.toString(rand.nextInt(101)) + 1);
-            double recentResult = Double.parseDouble(Integer.toString(rand.nextInt(101)) + 1);
-            for (int i = 0; i < 24; i ++) {
-                timeMarker = timeMarker.minusHours(1);
-                int randomNum = rand.nextInt(6) + 1;
-                String swimStatus = BeachSnapshot.NO_RESTRICTIONS;
-                if (randomNum == 1)
-                    swimStatus = BeachSnapshot.SWIM_BAN;
-                else if (randomNum <= 3)
-                    swimStatus = BeachSnapshot.SWIM_ADVISORY;
-
-                BeachSnapshot snapshot = new BeachSnapshot(timeMarker, beach, swimStatus, forecast, recentResult, null);
-                snapshot.save();
-            }
-        }
-    }
-
     public void onStop(Application app) {
-        //Logger.info("Application shutdown...");
+        Logger.info("Application shutdown...");
+        
+        // Tell the CronMan that the application is shutting down, so that it does not do a scrape
+        // on shutdown
+        CronMan.applicationDead = true;
     }
 
     private void readInBeaches() throws Exception {

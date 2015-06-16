@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 public abstract class CronMan {
 
     private static final Logger.ALogger logger = Logger.of(CronMan.class);
+    
+    public static boolean applicationDead = false;
 
     // Cron job that scrapes CPD beach sites
     public static void scrapeBeachSites(int minutesToStart) {
@@ -26,6 +28,11 @@ public abstract class CronMan {
             Runnable runScraper = new Runnable() {
                 @Override
                 public void run() {
+                	
+                	if (applicationDead) {
+                		// don't run the scraper if the application is dying.
+                		return;
+                	}
 
                     DateTime now = new DateTime();
 
@@ -35,7 +42,7 @@ public abstract class CronMan {
                         return;
                     }
                     logger.info("Running scrape");
-                    // TODO: Check time and don't run after 7:00PM
+
                     BeachScraper.scrapeAllCpdPages();
                 }
             };

@@ -1,10 +1,6 @@
 package controllers;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.util.List;
-
-import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -15,7 +11,6 @@ import models.BeachSnapshot;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import scoreboard.EcoliMeasurement;
 import models.Scoreboard;
 
 public class Apis extends Controller {

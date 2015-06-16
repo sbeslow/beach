@@ -32,19 +32,25 @@ public abstract class BeachScraper {
         doc = Jsoup.connect(cpdUrl).get();
 
         BeachSnapshot beachSnapshot = parseHtml(doc, beach);
-
-        beachSnapshot.save();
+        
+        if (null != beachSnapshot)
+        	beachSnapshot.save();
     }
 
     private static BeachSnapshot parseHtml(Document doc, Beach beach) {
 
         BeachSnapshot beachSnapshot = new BeachSnapshot(beach);
 
-        Element bSnap = doc.getElementsByClass("beach-snapshot").first();
-        Element restrictions = bSnap.getElementsByClass("status").first();
-        List<String> restrictTags = new ArrayList<>(restrictions.classNames());
+        Element bSnap = null;
 
         try {
+        	
+        	bSnap = doc.getElementsByClass("beach-snapshot").first();
+            if (null == bSnap)
+            	return null;
+
+            Element restrictions = bSnap.getElementsByClass("status").first();
+            List<String> restrictTags = new ArrayList<>(restrictions.classNames());
 
             String restriction = restrictTags.get(0);
             if (restriction.equals("status")) {
