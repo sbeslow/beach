@@ -12,10 +12,19 @@
                 <h3 style="text-align: center"><span style="color:#3966aa">Current Drek Beach:</span> <a style="color:#AA7D39;" href="/beach/@scoreboard.beachRankings.get(0).beachUrl">@scoreboard.beachRankings.get(0).beachName</a></h3>
             </div>
         </div>
+
         <div class="container" id="statsBoard">
             @statsBoard(scoreboard)
         </div>
+        <div class="container-fluid" id="pooScoreDefine" style="background-color:#AA7D39">
+        	<div class="col-sm-8 col-sm-offset-2">
+        		<h2 style="color:white;">Each time a beach has a swim advisory it gets one point added to its Poo Score.
+        		Each time a beach has a swim ban it gets two points added to its Poo Score. </h2>
+        	</div>
+        </div>
 
+        @counter()
+        
         @heroImage()
 <hr>
         <div class="container" id="whatsThis" style="text-align: center;margin-bottom: 7px;">
