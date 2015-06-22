@@ -44,5 +44,8 @@ public class Application extends Controller {
     public static String mapboxProjectId() {
         return Play.application().configuration().getString("mapBoxProjectId");
     }
-    
+
+    public static Result whatIsThis() {
+        return ok(views.html.whatIsThis.render());
+    }
 }

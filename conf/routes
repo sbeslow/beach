@@ -8,9 +8,10 @@ GET        /beach/:urlCode             controllers.Beaches.show(urlCode: String)
 
 GET        /api/ecoli/:beachUrl        controllers.Apis.ecoli(beachUrl: String)
 GET        /api/scoreboard             controllers.Apis.scoreboard()
-GET        /api/beach/:beachUrl         controllers.Apis.beachInfo(beachUrl: String)
-GET			/api/fullSummaries				controllers.Apis.fullSummaries()
+GET        /api/beach/:beachUrl        controllers.Apis.beachInfo(beachUrl: String)
+GET        /api/fullSummaries          controllers.Apis.fullSummaries()
 GET        /getInvolved                controllers.Application.involved()
+GET         /whatIsThis                 controllers.Application.whatIsThis()
 
 GET        /test                       controllers.Application.test()
 
