@@ -1,5 +1,5 @@
 @(scoreboard: Scoreboard)
-
+Beach,Date,Reading,Prediction,SwimStatus<br>
 @for(beachRanking <- scoreboard.beachRankings){
 	@for(ecoliMeas <- beachRanking.ecoliMeasurements){
 		@beachRanking.beachUrl&#44;@ecoliMeas.getDate()&#44;@ecoliMeas.getReading()&#44;@ecoliMeas.getPrediction()&#44;@ecoliMeas.getMaxSwimStatus()<br>

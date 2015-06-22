@@ -1,3 +1,8 @@
+<div class="container">
+
+</div>
+
+
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script src="http://code.highcharts.com/modules/exporting.js"></script>
 
@@ -5,7 +10,12 @@
 
 <script>
 
-    function drawChart235() {
+    function drawChart235(statusCounter) {
+    	
+    	var dataVals = [];
+    	$.each(statusCounter, function(key, value) {
+    		dataVals.push([key, value]);
+    	});
 
         // Radialize the colors
         Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
@@ -44,23 +54,29 @@
             },
             series: [{
                 type: 'pie',
-                name: 'Browser share',
-                data: [
-                    ['Firefox',   45.0],
-                    ['IE',       26.8],
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    ['Safari',    8.5],
-                    ['Opera',     6.2],
-                    ['Others',   0.7]
-                ]
+                data: dataVals
             }]
         });
     }
+    
+    $.getJSON( "/api/scoreboard", function( data ) {
+    	var statusCounter = {"No Restrictions":0, "Swim Advisory":0, "Swim Ban":0};
+    	$.each(data.beachRankings, function(index, bRanking) {
+    		$.each(bRanking.ecoliMeasurements, function(i, eMeas) {
 
-    drawChart235();
+	    		if (eMeas.reading >= 235){
+	    			if (eMeas.maxSwimStatus == 'No Restrictions'){
+	    				statusCounter['No Restrictions']++;
+	    			}
+	    			else if (eMeas.maxSwimStatus == 'Swim Advisory'){
+	    				statusCounter['Swim Advisory']++;
+	    			}
+	    			else if (eMeas.maxSwimStatus == 'Swim Ban'){
+	    				statusCounter['Swim Ban']++;
+	    			}
+	    		}
+    		});
+    	});
+    	drawChart235(statusCounter);
+    });
 </script>
