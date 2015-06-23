@@ -13,17 +13,18 @@
             </div>
         </div>
 
-        <div class="container" id="statsBoard">
-            @statsBoard(scoreboard)
+        <div class="container" id="topTen">
+            @topTen(scoreboard)
         </div>
         <div class="container-fluid" id="pooScoreDefine" style="background-color:#AA7D39">
         	<div class="col-sm-8 col-sm-offset-2">
         		<h2 style="color:white;">Each time a beach has a <strong>swim advisory</strong> it gets one point
-                    added to its Poo Score.  Each time a beach has a <strong>swim ban</strong>
-                    it gets two points added to its Poo Score. </h2>
+                    added to its Poo Score.  A Swim Ban is worth two </h2>
         	</div>
         </div>
 
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
         @swimRestrictStats()
         
         @heroImage()
