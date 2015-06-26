@@ -26,6 +26,15 @@ function drawChart235(statusCounter) {
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
+        title: {
+            text: 'Swim advisories on beach-days where e-coli was measured at greater than 235 CCE'
+        },
+        exporting: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
         plotOptions: {
             pie: {
                 allowPointSelect: true,
