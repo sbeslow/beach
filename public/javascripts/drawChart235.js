@@ -27,7 +27,8 @@ function drawChart235(statusCounter) {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         title: {
-            text: 'Swim advisories on beach-days where e-coli was measured at greater than 235 CCE'
+            text: 'Swim status on beach-days where e-coli was measured at greater than 235 CCE',
+            y: 360
         },
         exporting: {
             enabled: false
