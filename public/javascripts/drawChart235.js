@@ -28,7 +28,6 @@ function drawChart235(statusCounter) {
         },
         title: {
             text: 'Swim status on beach-days where e-coli was measured at greater than 235 CCE',
-            y: 360
         },
         exporting: {
             enabled: false
