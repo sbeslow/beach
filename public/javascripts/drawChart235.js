@@ -61,7 +61,7 @@ $.getJSON( "/api/scoreboard", function( data ) {
     $.each(data.beachRankings, function(index, bRanking) {
         $.each(bRanking.ecoliMeasurements, function(i, eMeas) {
 
-            if (eMeas.reading >= 235){
+            if ((eMeas.reading >= 235) && (eMeas.reading < 1000)) {
                 if (eMeas.maxSwimStatus == 'No Restrictions'){
                     statusCounter['No Restrictions']++;
                 }
