@@ -1,33 +1,23 @@
-function drawChart235(statusCounter) {
+function drawPie(chartName, statusCounter) {
 
     var dataVals = [];
     $.each(statusCounter, function(key, value) {
         dataVals.push([key, value]);
     });
 
-    // Radialize the colors
-    Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
-        return {
-            radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-            stops: [
-                [0, color],
-                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-            ]
-        };
-    });
-
     // Build the chart
-    $('#chart235').highcharts({
+    $(chartName).highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false
         },
+        colors: ['green', 'yellow', 'red'],
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
-        title: {
-            text: 'Swim status on beach-days where e-coli was measured at greater than 235 CCE',
+        title:{
+            text:''
         },
         exporting: {
             enabled: false
@@ -57,22 +47,35 @@ function drawChart235(statusCounter) {
 }
 
 $.getJSON( "/api/scoreboard", function( data ) {
-    var statusCounter = {"No Restrictions":0, "Swim Advisory":0, "Swim Ban":0};
+    var counter235 = {"No Restrictions":0, "Swim Advisory":0, "Swim Ban":0};
+    var counter1000 = {"No Restrictions":0, "Swim Advisory":0, "Swim Ban":0};
     $.each(data.beachRankings, function(index, bRanking) {
         $.each(bRanking.ecoliMeasurements, function(i, eMeas) {
-
-            if ((eMeas.reading >= 235) && (eMeas.reading < 1000)) {
+        	
+        	if (eMeas.reading >= 1000) {
                 if (eMeas.maxSwimStatus == 'No Restrictions'){
-                    statusCounter['No Restrictions']++;
+                	counter1000['No Restrictions']++;
                 }
                 else if (eMeas.maxSwimStatus == 'Swim Advisory'){
-                    statusCounter['Swim Advisory']++;
+                	counter1000['Swim Advisory']++;
                 }
                 else if (eMeas.maxSwimStatus == 'Swim Ban'){
-                    statusCounter['Swim Ban']++;
+                	counter1000['Swim Ban']++;
+                }        		
+        	}
+        	else if (eMeas.reading >= 235) {
+                if (eMeas.maxSwimStatus == 'No Restrictions'){
+                	counter235['No Restrictions']++;
                 }
-            }
+                else if (eMeas.maxSwimStatus == 'Swim Advisory'){
+                	counter235['Swim Advisory']++;
+                }
+                else if (eMeas.maxSwimStatus == 'Swim Ban'){
+                	counter235['Swim Ban']++;
+                }            		
+        	}
         });
     });
-    drawChart235(statusCounter);
+    drawPie("#chart235", counter235);
+    drawPie("#chart1000", counter1000);
 });
