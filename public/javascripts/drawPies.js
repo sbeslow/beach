@@ -40,6 +40,7 @@ function drawPie(chartName, statusCounter) {
             }
         },
         series: [{
+        	name: "Beach Days",
             type: 'pie',
             data: dataVals
         }]
