@@ -12,7 +12,7 @@ function drawPie(chartName, statusCounter) {
             plotBorderWidth: null,
             plotShadow: false
         },
-        colors: ['green', 'yellow', 'red'],
+        colors: ['green', 'orange', 'red'],
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },

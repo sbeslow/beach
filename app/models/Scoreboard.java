@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import scoreboard.EcoliMeasurement;
+
 import java.util.*;
 
 public class Scoreboard {
@@ -70,5 +72,45 @@ public class Scoreboard {
     public String asOf() {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
         return formatter.print(calculatedTime);
+    }
+    
+    public String percentOfDaysOver1000() {
+    	int daysWithCorrectStatus = 0;
+    	int totalDays = 0;
+    	for (BeachRanking beachRanking : beachRankings) {
+    		
+    		for (EcoliMeasurement ecoliMeasurement : beachRanking.ecoliMeasurements) {
+    			if (ecoliMeasurement.getReading() >= 1000) {
+    				if (ecoliMeasurement.getMaxSwimStatus().equals(BeachSnapshot.SWIM_BAN)) {
+    					daysWithCorrectStatus++;
+    				}
+        			totalDays++;
+    			}
+    		}
+    		
+    	}
+    	
+    	double percent = 100 * (double) daysWithCorrectStatus / totalDays;
+    	return String.format("%.1f", percent);
+    }
+    
+    public String percentOfDaysOver235() {
+    	int daysWithCorrectStatus = 0;
+    	int totalDays = 0;
+    	for (BeachRanking beachRanking : beachRankings) {
+    		
+    		for (EcoliMeasurement ecoliMeasurement : beachRanking.ecoliMeasurements) {
+    			if ((ecoliMeasurement.getReading() < 1000) && (ecoliMeasurement.getReading() >= 235)) {
+    				if (!ecoliMeasurement.getMaxSwimStatus().equals(BeachSnapshot.NO_RESTRICTIONS)) {
+    					daysWithCorrectStatus++;
+    				}
+        			totalDays++;
+    			}
+    		}
+    		
+    	}
+    	
+    	double percent = 100 * (double) daysWithCorrectStatus / totalDays;
+    	return String.format("%.1f", percent);
     }
 }

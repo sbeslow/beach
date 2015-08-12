@@ -1,3 +1,5 @@
+@(scoreboard: Scoreboard)
+
 <div class="container">
     <div class="row">
         <div class="col-sm-6">
@@ -5,7 +7,7 @@
             <h5>A swim ban means that swimming is not allowed.  Bans may be issued due to
             unsafe conditions, following a massive rain event, or extremely high e-coli levels<br>
             Although the U.S. EPA suggests a swim ban for e-coli counts higher than 1000 CCE, bans have
-            only been issued XX% of those days this season.
+            only been issued @scoreboard.percentOfDaysOver1000()% of those days this season.
 
             </h5>
         </div>
@@ -19,8 +21,8 @@
         <div class="col-sm-6">
             <h3 style="text-align: center;color:black;">Swim Advisories</h3>
             <h5>A swim ban means that swimmers are advised to enter with caution.<br>
-                Although the U.S. EPA suggests a swim advisory for e-coli counts higher than 235 CCE,
-                advisories have only been issued XX% of those days this season.
+                Although the U.S. EPA suggests a swim advisory for e-coli counts higher than 235 CCE, some sort of swim
+                restriction has only been issued @scoreboard.percentOfDaysOver235()% of those days this season.
 
             </h5>
         </div>
