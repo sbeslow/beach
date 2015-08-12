@@ -47,7 +47,9 @@ public class Scoreboard {
             }
             rank++;
         }
-        calculatedTime = new DateTime().getMillis();
+        
+        BeachSnapshot latestBS = BeachSnapshot.find.orderBy("scrapeTime desc").setMaxRows(1).findUnique();
+        calculatedTime = latestBS.scrapeTime.getMillis();
 
     }
 
@@ -70,7 +72,7 @@ public class Scoreboard {
     }
 
     public String asOf() {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("MMMM, yyyy");
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MMM dd, yyyy @ hh:mm a");
         return formatter.print(calculatedTime);
     }
     
