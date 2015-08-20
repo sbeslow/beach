@@ -75,7 +75,9 @@ public class Scoreboard {
         DateTimeFormatter formatter = DateTimeFormat.forPattern("MMM dd, yyyy @ hh:mm a");
         return formatter.print(calculatedTime);
     }
-    
+
+    // The next 4 methods could be more efficient.  But, these were hacks that were put
+    // together piecemeal for now.  Clean this up later.
     public String percentOfDaysOver1000() {
     	int daysWithCorrectStatus = 0;
     	int totalDays = 0;
@@ -94,6 +96,21 @@ public class Scoreboard {
     	
     	double percent = 100 * (double) daysWithCorrectStatus / totalDays;
     	return String.format("%.1f", percent);
+    }
+
+    public String daysOver1000() {
+        int totalDays = 0;
+        for (BeachRanking beachRanking : beachRankings) {
+
+            for (EcoliMeasurement ecoliMeasurement : beachRanking.ecoliMeasurements) {
+                if (ecoliMeasurement.getReading() >= 1000) {
+                    totalDays++;
+                }
+            }
+
+        }
+
+        return Integer.toString(totalDays);
     }
     
     public String percentOfDaysOver235() {
@@ -114,5 +131,20 @@ public class Scoreboard {
     	
     	double percent = 100 * (double) daysWithCorrectStatus / totalDays;
     	return String.format("%.1f", percent);
+    }
+
+    public String daysOver235() {
+        int totalDays = 0;
+        for (BeachRanking beachRanking : beachRankings) {
+
+            for (EcoliMeasurement ecoliMeasurement : beachRanking.ecoliMeasurements) {
+                if ((ecoliMeasurement.getReading() < 1000) && (ecoliMeasurement.getReading() >= 235)) {
+                    totalDays++;
+                }
+            }
+
+        }
+
+        return Integer.toString(totalDays);
     }
 }

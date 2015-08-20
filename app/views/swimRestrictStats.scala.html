@@ -5,11 +5,13 @@
 		<h3 style="text-align: center;">Swim Bans</h3>
 	</div>
     <div class="row">
-        <div class="col-md-4" style="margin-top:20px;">            
+        <div class="col-md-4" style="margin-top:20px;">
             <h5>A swim ban means that swimming is not allowed.  Bans may be issued due to
             unsafe conditions, following a massive rain event, or extremely high e-coli levels<br><br>
-            Although the U.S. EPA suggests a swim ban for e-coli counts higher than 1000 CCE, bans have
-            only been issued <span style="color:red;">@scoreboard.percentOfDaysOver1000()%</span> of those days this season.
+            The U.S. EPA suggests a swim ban for e-coli counts higher than 1000 CCE.  Of the
+            <span style="color:red;">@scoreboard.daysOver1000()</span> days in which e-coli measurements
+            have exceeded that, bans have only been issued
+            <span style="color:red;">@scoreboard.percentOfDaysOver1000()%</span> of the time.
             </h5>
         </div>
         <div class="col-md-8">
@@ -25,8 +27,11 @@
     <div class="row">
         <div class="col-md-4" style="margin-top:20px;">            
             <h5>A <strong>swim advisory</strong> means that swimmers are advised to enter with caution.<br><br>
-                Although the U.S. EPA suggests a swim advisory for e-coli counts higher than 235 CCE, some sort of swim
-                restriction has only been issued <span style="color:red;">@scoreboard.percentOfDaysOver235()%</span> of those days this season.
+                The U.S. EPA suggests a swim advisory for e-coli counts higher than 235 CCE.  Of the
+                <span style="color:red;">@scoreboard.daysOver235()</span>
+                days in which e-coli levels have exceeded this level (but have been under 1000), some sort of swim
+                restriction has only been issued <span style="color:red;">@scoreboard.percentOfDaysOver235()%</span>
+                of the time.
 
             </h5>
         </div>
